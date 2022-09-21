@@ -1,45 +1,26 @@
+//#include <AD7746.h>
 #include <Wire.h>
 
-//I/O pin configuration registers
-#define DIRD *((volatile unsigned char*) 0x2A) // Data dircetion register of port D
-#define PIND *((volatile unsigned char*) 0x29) // Pin set register of port D
-#define DIRB *((volatile unsigned char*) 0x24) // Data dircetion register of port B
-#define PINB *((volatile unsigned char*) 0x23) // Pin set register of port B
-
-// Timer0 configuration register
-#define TCCR2A *((volatile unsigned char*) 0xB0) // Timer register A
-#define TCCR2B *((volatile unsigned char*) 0xB1) // Timer register B
-#define TIMSK2 *((volatile unsigned char*) 0x70) // Timer interrup enable register
-
-
 void setup() {
-  DIRB=0;
-  PINB=0;
-  DIRB|=(1<<5); // Sets direction register for PB5
-  PINB|=(0<<5);
-  initTimer2();
+  Wire.begin(); // join i2c bus (address optional for master)
+   Wire.beginTransmission(0x48); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B1001 0000
+  Wire.write(byte(0x07));   // sets register pointer to the given adress 0x07
+  Wire.write(byte(0x50));   // gives instructions to the device at adress 0x07
+  Wire.write(byte(0x50));   // gives instructions to the device at adress 0x08
+  Wire.write(byte(0x50));   // gives instructions to the device at adress 0x09
+  Wire.write(byte(0x50));   // gives instructions to the device at adress 0x0A
+  Wire.write(byte(0x50));   // gives instructions to the device at adress 0x0B
+  Wire.endTransmission();
 }
 
 void loop() {
-  ///digitalWrite(6,1);
-  //analogWrite(6,100); 
-  PINB^=(1<<5);
-  delay(1000);                       // wait for a second
-}
-
-void initTimer2(){
-  TCCR2A|=(0<<7)|(0<<6);          // Timer in normal operation, OC0A disconected
-  TCCR2A|=(0<<0)|(0<<1);          // Timer in normal opperation counts until 0xFF and sets TOV flag there
-  TCCR2B|=(0<<3);          // Timer in normal opperation counts until 0xFF and sets TOV flag there continuation of TCCR0A
-  TCCR2B|=(1<<2)|(1<<1)|(1<<0);          // No prescaling takes clock frequenzie
-  TIMSK2|=(1<<0);          // Enalbs the overflow interuppt
-}
-unsigned char b=0;
-ISR(TIMER2_OVF_vect){
-  b++;
-  if(b==10){
-    b=0;
-    //PINB|=32; // Toggels PB5 
-    //digitalWrite(13,1);
+  unsigned char buffer[4];
+  Wire.requestFrom(0x48,4);
+  if(Wire.available()){
+    for (int i=0; i<4; i++){
+      buffer[i]=Wire.read();
+    }
   }
+  uint32_t C=0;
+  C = ((uint32_t)buffer[1]<<16)|((uint32_t)buffer[2]<<8)|((uint32_t)buffer[3]); // No fixpoint aritmeritc is done yet
 }
