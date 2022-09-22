@@ -2,9 +2,12 @@
 
 //I/O pin configuration registers
 #define DIRD *((volatile unsigned char*) 0x2A) // Data dircetion register of port D
-#define PIND *((volatile unsigned char*) 0x29) // Pin set register of port D
+#define PORTB*((volatile unsigned char*) 0x2B) // Pin set register of port B woks according to DIR port
+#define PIND *((volatile unsigned char*) 0x29) // Pin toggle register of port D woks independent of DIR port
+
 #define DIRB *((volatile unsigned char*) 0x24) // Data dircetion register of port B
-#define PINB *((volatile unsigned char*) 0x23) // Pin set register of port B
+#define PORTB*((volatile unsigned char*) 0x25) // Pin set register of port B woks according to DIR port
+#define PINB *((volatile unsigned char*) 0x23) // Pin toggle register of port B woks independent of DIR port
 
 // Timer0 configuration register
 #define TCCR2A *((volatile unsigned char*) 0xB0) // Timer register A
@@ -14,17 +17,20 @@
 
 void setup() {
   DIRB=0;
-  PINB=0;
+  PORTB=0;
   DIRB|=(1<<5); // Sets direction register for PB5
-  PINB|=(0<<5);
+  PORTD|=(0<<5);
+  DIRD=0;
+  PORTD=0;
+  DIRD|=(1<<5); // Sets direction register for PB5
+  PORTD|=(1<<5);
   initTimer2();
+  Serial.begin(115200);
 }
 
-void loop() {
-  ///digitalWrite(6,1);
-  //analogWrite(6,100); 
-  PINB^=(1<<5);
-  delay(1000);                       // wait for a second
+void loop() { 
+  PORTD|=(1<<5);
+  Serial.print("Tis is inerrupt ");Serial.println(*TIMER2_OVF_vect);
 }
 
 void initTimer2(){
@@ -35,11 +41,14 @@ void initTimer2(){
   TIMSK2|=(1<<0);          // Enalbs the overflow interuppt
 }
 unsigned char b=0;
+unsigned char c=0;
 ISR(TIMER2_OVF_vect){
   b++;
   if(b==10){
     b=0;
-    //PINB|=32; // Toggels PB5 
+    c=32; 
+    PORTB^=32; // Toggels PB5
+    Serial.print("Tis is B");Serial.println(PORTB);
     //digitalWrite(13,1);
   }
 }
