@@ -6,17 +6,19 @@ import serial.tools.list_ports
 import matplotlib.pyplot as plt
 import tkinter as tk
 import pandas as pd
+import time
+
 import numpy as np
 
 # initalize the serial port
 serialInst = serial.Serial()
 pressure = []
-time = []
+t_val = []
 cond = False
 plotStrat = True
-t = 0
 def plot(t,data):
     plt.ion()
+    plt.clf()
     plt.title('Serial value from Arduino')
     plt.grid(True)
     plt.ylabel('Values')
@@ -24,23 +26,42 @@ def plot(t,data):
     plt.plot(t,data)
     plt.show()
     plt.pause(0.01)
-def plot_start():
-    global plotStrat
-    plotStrat = True
+def plot_start(): # starts measurements when the start btton is applied
+    t = 0
+    global  cond
     print("Start measurements")
-def plot_stop():
+    while True: # infinite loop that reads the serial buffer of the Arduino and starts the plot
+        if cond == True: # global variable that can interupt the measuremetn
+            print("Rcording is interruped: restart file")
+            break
+        if serialInst.in_waiting:
+            t = t + 10
+            bites = serialInst.readline()
+            packet = str(bites.decode('utf')).replace('\r\n', '', 1)
+            float_or_not = packet.replace('.', '', 1).isdigit()
+            if float_or_not == False:
+                pressure.append(0)
+                t_val.append(t)
+                print(packet)
+            else:
+                pressure.append(float(packet))
+                t_val.append(t)
+            plot(t_val, pressure)
+    #cond = False
+
+def plot_stop(): # stp button is applyed the fucktion saves data to measurment file
     global cond
-    export = input("Save measurments? y/n")
+    export = input("Save measurments? y/n") # ask user if he want to measure the ouput
     if export == 'y':
-        data = pd.DataFrame({'time': time, 'pressure': pressure})
+        data = pd.DataFrame({'time': t_val, 'pressure': pressure})
         Path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\C_mes_AD7746'
-        data.to_csv(Path+'/data.csv')
+        data.to_excel(Path+'/data.xlsx')
         print("Register measurements")
     else:
         print("Measurements not saved")
     cond = True
 
-def serialPort():
+def serialPortArduino(): # Searches if Arduino Uno is connecto or not
     ports = serial.tools.list_ports.comports()
     portVar = False
     portList = []
@@ -56,10 +77,10 @@ def serialPort():
             print("Arduino Uno conneced to Port: " + portVar)
         else:
             print("No Arduino Uno conected")
-    return portVar
+    return portVar # returns Fals if Arduion Uno is not connect, if connectd returns the port name
 
 
-#------ Creat buttons
+#------ Creat buttons of little user interface to control the plot starts etc
 root = tk.Tk()
 root.title('Real time plot')
 root.config(background= 'light blue')
@@ -72,9 +93,9 @@ start.place(x= 10, y=10)
 root.update()
 stop = tk.Button(root, text= "Stop", font= ('calbiri',12), command= lambda: plot_stop())
 stop.place(x= start.winfo_x()+start.winfo_reqwidth() + 20, y= 10)
-
-# cheks if port is aviable if not the while loop is never executed
-portVar = serialPort()
+root.update()
+########### Initialise the Serial port if Arduino is connected
+portVar = serialPortArduino()
 if portVar == False:
     cond = True
 else:
@@ -82,27 +103,8 @@ else:
     serialInst.port = portVar
     serialInst.open()
     serialInst.reset_input_buffer()
-
-
-# While loop that recovers measurements
-while True:
-    if cond == True:
-        print("Rcording is interruped: restart file")
-        break
-    if serialInst.in_waiting:
-        t = t + 10
-        bites = serialInst.readline()
-        packet = str(bites.decode('utf')).replace('\r\n', '', 1)
-        float_or_not = packet.replace('.', '', 1).isdigit()
-        if float_or_not == False:
-            pressure.append(0)
-            time.append(t)
-            print(packet)
-        else:
-            pressure.append(float(packet))
-            time.append(t)
-        plot(time,pressure)
-root.mainloop()
+if portVar: # if Arduino is connected starts the GUI in loop
+    root.mainloop()
 
 
 
