@@ -4,106 +4,104 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import serial.tools.list_ports
 import matplotlib.pyplot as plt
-import matplotlib.backends.backend_tkagg as bk
 import tkinter as tk
+import pandas as pd
 import numpy as np
 
-
-# Global variables
-data = np.array([])
-cond = True
-
-## plot data
-def plot_data():
-    global cond
-    global data
-
-    if(cond == False):
-        paket = '0'
-        if serialInst.in_waiting:
-            a = serialInst.readline()
-            paket = a.decode('utf').replace('\r\n','',1)
-            if paket.replace('.', '', 1).isdigit()==False:
-                print(paket)
-                paket=0
-        if(len(data) < 100):
-            data = np.append(data,float(paket))
-        else:
-            data[0:99] = data[1:100]
-            data[99] = float(paket)
-
-        lines.set_xdata(np.arange(0,len(data)))
-        lines.set_ydata(data)
-        canvas.draw()
-    root.after(1,plot_data())
+# initalize the serial port
+serialInst = serial.Serial()
+pressure = []
+time = []
+cond = False
+plotStrat = True
+t = 0
+def plot(t,data):
+    plt.ion()
+    plt.title('Serial value from Arduino')
+    plt.grid(True)
+    plt.ylabel('Values')
+    plt.xlabel('time')
+    plt.plot(t,data)
+    plt.show()
+    plt.pause(0.01)
 def plot_start():
-    global cond
-    cond = True
-    serialInst.reset_input_buffer()
+    global plotStrat
+    plotStrat = True
+    print("Start measurements")
 def plot_stop():
     global cond
-    cond = False
+    export = input("Save measurments? y/n")
+    if export == 'y':
+        data = pd.DataFrame({'time': time, 'pressure': pressure})
+        Path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\C_mes_AD7746'
+        data.to_csv(Path+'/data.csv')
+        print("Register measurements")
+    else:
+        print("Measurements not saved")
+    cond = True
 
-# Mais GUI code
+def serialPort():
+    ports = serial.tools.list_ports.comports()
+    portVar = False
+    portList = []
+    if len(ports)==0:
+        print("No port is conected")
 
+    for onePort in ports:
+        portName = str(onePort)
+        portList.append(portName)
+        print(portName)
+        if "Arduino Uno" in portName:
+            portVar = portName[0:5]
+            print("Arduino Uno conneced to Port: " + portVar)
+        else:
+            print("No Arduino Uno conected")
+    return portVar
+
+
+#------ Creat buttons
 root = tk.Tk()
 root.title('Real time plot')
 root.config(background= 'light blue')
-root.geometry('700x500') #set the window size
+root.geometry('130x50') #set the window size
 
-# Creat plot objet on GUI
-# add figure canvas
-fig = plt.figure()
-ax = fig.add_subplot(111)
-
-#ax parameters
-ax.set_title('Serial Data')
-ax.set_xlabel('Sample')
-ax.set_ylabel('Pressure')
-ax.set_xlim(0,100)
-ax.set_ylim(-0.5,800)
-lines = ax.plot([],[])[0]
-
-canvas = bk.FigureCanvasTkAgg(fig, master=root) # a tk. DrawingArea
-canvas.get_tk_widget().place(x= 10, y= 10, width= 500, height= 400)
-canvas.draw()
-
-#------ Creat buttons
 root.update()
 start = tk.Button(root, text= "Start", font= ('calbiri',12), command= lambda: plot_start())
-start.place(x= 100, y=450)
+start.place(x= 10, y=10)
 
 root.update()
 stop = tk.Button(root, text= "Stop", font= ('calbiri',12), command= lambda: plot_stop())
-stop.place(x= start.winfo_x()+start.winfo_reqwidth() + 20, y= 450)
+stop.place(x= start.winfo_x()+start.winfo_reqwidth() + 20, y= 10)
 
-
-# initalize the serial port
-ports = serial.tools.list_ports.comports()
-serialInst = serial.Serial()
-portList = []
-portVar = False
-pressure = 0
-
-if len(ports)==0:
-    print("No port is conected")
-
-for onePort in ports:
-    portName = str(onePort)
-    portList.append(portName)
-    print(portName)
-    if "Arduino Uno" in portName:
-        portVar = portName[0:5]
-        print("Arduino Uno conneced to Port: " + portVar)
-    else:
-        print("No Arduino Uno conected")
-if portVar:
+# cheks if port is aviable if not the while loop is never executed
+portVar = serialPort()
+if portVar == False:
+    cond = True
+else:
     serialInst.baudrate = 115200
     serialInst.port = portVar
     serialInst.open()
     serialInst.reset_input_buffer()
 
-root.after(1, plot_data())
+
+# While loop that recovers measurements
+while True:
+    if cond == True:
+        print("Rcording is interruped: restart file")
+        break
+    if serialInst.in_waiting:
+        t = t + 10
+        bites = serialInst.readline()
+        packet = str(bites.decode('utf')).replace('\r\n', '', 1)
+        float_or_not = packet.replace('.', '', 1).isdigit()
+        if float_or_not == False:
+            pressure.append(0)
+            time.append(t)
+            print(packet)
+        else:
+            pressure.append(float(packet))
+            time.append(t)
+        plot(time,pressure)
 root.mainloop()
 
 
