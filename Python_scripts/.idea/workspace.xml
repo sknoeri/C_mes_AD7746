@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4e6d02b3-8290-4160-8d42-077a0799a631" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Python_scripts.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Python_scripts.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_good/bad/8.12.19_v3_test14.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_good/bad/8.13.19_v3_test4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_good/bad/8.13.19_v3_test5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good/8.13.19_v3_test13.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good/8.13.19_v3_test14.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good/8.9.19_v3_oil_20_hg_14.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good/8.9.19_v3_oil_20_hg_15.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good/8.9.19_v3_oil_20_hg_16.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good_and_bad.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_good/ok/8.9.19_v3_oil_20_hg_17.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/.ipynb_checkpoints/plot_all_LiMMPET_experiments-checkpoint.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test10.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test11.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test12.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test13.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test14.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test15.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test7.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test8.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test9.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test11.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test12.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test13.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test14.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test15.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test16.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test2_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test3_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test6.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_13.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_14.5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_14.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_15.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_16.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_17.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/9.24.19_v3_test2_112_v3_2_O15_Hg13_10nF_6517a.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/9.27.19_v3_capTest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/capTest/testCapv1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/find_all_txt_files_in_dir_and_pretty_plot.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/plotBestBars.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/plotBestFigs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/plotCapTest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/plotFigs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/plot_all_LiMMPET_experiments.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test_float.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_float.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/git_nid.py" beforeDir="false" afterPath="$PROJECT_DIR$/git_nid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../main.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2ES7mRelbnZG1up76X7beZZafTt" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/simon/Documents/Simels_daten/Epfl/sem_13_2022_Master_theis_USA/Master_thesis/Capacitance_measuring/C_mes_AD7746/Python_scripts/venv",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Python_scripts" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.git_nid">
+    <configuration name="Test_float" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Python_scripts" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test_float.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="git_nid" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Python_scripts" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/git_nid.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Python_scripts" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="plotBestFigs" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Python_scripts" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/LiMMPET_testing_data" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LiMMPET_testing_data/plotBestFigs.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.git_nid" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.plotBestFigs" />
+      <item itemvalue="Python.Test_float" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.Test_float" />
+        <item itemvalue="Python.plotBestFigs" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4e6d02b3-8290-4160-8d42-077a0799a631" name="Changes" comment="" />
+      <created>1662577290495</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1662577290495</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/LiMMPET_testing_data/plotBestFigs.py</url>
+          <line>28</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/LiMMPET_testing_data/plotBestFigs.py</url>
+          <line>31</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
