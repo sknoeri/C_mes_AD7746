@@ -28,7 +28,7 @@ def plot(t,data):
     plt.pause(0.01)
 def plot_start(): # starts measurements when the start btton is applied
     t = 0
-    global  cond
+    global cond
     print("Start measurements")
     while True: # infinite loop that reads the serial buffer of the Arduino and starts the plot
         if cond == True: # global variable that can interupt the measuremetn
@@ -89,6 +89,10 @@ root.geometry('130x50') #set the window size
 root.update()
 start = tk.Button(root, text= "Start", font= ('calbiri',12), command= lambda: plot_start())
 start.place(x= 10, y=10)
+
+root.update()
+stop = tk.Button(root, text= "Stop", font= ('calbiri',12), command= lambda: plot_stop())
+stop.place(x= start.winfo_x()+start.winfo_reqwidth() + 20, y= 10)
 
 root.update()
 stop = tk.Button(root, text= "Stop", font= ('calbiri',12), command= lambda: plot_stop())
