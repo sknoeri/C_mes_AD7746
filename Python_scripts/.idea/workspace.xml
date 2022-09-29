@@ -2,69 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e6d02b3-8290-4160-8d42-077a0799a631" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Python_scripts.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Python_scripts.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_good/bad/8.12.19_v3_test14.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_good/bad/8.13.19_v3_test4.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_good/bad/8.13.19_v3_test5.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good/8.13.19_v3_test13.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good/8.13.19_v3_test14.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good/8.9.19_v3_oil_20_hg_14.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good/8.9.19_v3_oil_20_hg_15.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good/8.9.19_v3_oil_20_hg_16.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_good/good_and_bad.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_good/ok/8.9.19_v3_oil_20_hg_17.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/.ipynb_checkpoints/plot_all_LiMMPET_experiments-checkpoint.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test10.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test11.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test12.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test13.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test14.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test15.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test4.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test5.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test7.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test8.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.12.19_v3_test9.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test11.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test12.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test13.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test14.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test15.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test16.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test2_2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test3_2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test4.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test5.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.13.19_v3_test6.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_13.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_14.5.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_14.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_15.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_16.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/8.9.19_v3_oil_20_hg_17.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/9.24.19_v3_test2_112_v3_2_O15_Hg13_10nF_6517a.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/9.27.19_v3_capTest.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/capTest/testCapv1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/find_all_txt_files_in_dir_and_pretty_plot.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/plotBestBars.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/plotBestFigs.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/plotCapTest.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/plotFigs.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiMMPET_testing_data/plot_all_LiMMPET_experiments.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test_float.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_float.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/git_nid.py" beforeDir="false" afterPath="$PROJECT_DIR$/git_nid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../data.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +38,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_opened_file_path": "C:/Users/simon/Documents/Simels_daten/Epfl/sem_13_2022_Master_theis_USA/Master_thesis/Capacitance_measuring/C_mes_AD7746/Python_scripts/venv",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
