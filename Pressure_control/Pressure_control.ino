@@ -52,14 +52,14 @@ void Control_pres( void *pvParameters __attribute__((unused)) )  // This is a Ta
   for (;;) // A Task shall never return or exit.
   {
     float pressure_hPa = mpr.readPressure();
-    Serial.print("Pressure (hPa): "); Serial.println(pressure_hPa);
-    Serial.print("Duty: "); Serial.println(duty);
+    Serial.println(pressure_hPa); //Serial.print("Pressure (hPa): "); 
+    //Serial.print("Duty: "); Serial.println(duty);
     digitalWrite(5,duty);
     if(duty>256){
       duty=0;
     }
     duty=duty+10;
-    Serial.print(portTICK_PERIOD_MS);
-    vTaskDelay(10 / portTICK_PERIOD_MS);  // one tick delay (10ms) in between reads for stability
+    //Serial.print(portTICK_PERIOD_MS);
+    vTaskDelay(100 / portTICK_PERIOD_MS);  // one tick delay (10ms) in between reads for stability
   }
 }
