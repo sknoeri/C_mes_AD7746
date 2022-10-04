@@ -19,7 +19,7 @@ t_val = []
 recordStop = True
 onOffPlot = False
 comOpen = False
-
+Path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\C_mes_AD7746'
 
 # function that plots the Serial data from the arduino
 def plot(t,data):
@@ -41,9 +41,11 @@ def record_data(): # starts measurements when the start btton is applied
     if(recordStop == True and comOpen != False):
         recordStop =False
         plt.close()
+        record.config(image=on)
         print("Start measurements")
     else:
         recordStop = True
+        record.config(image=off)
     while True: # infinite loop that reads the serial buffer of the Arduino and starts the plot
         if(recordStop == True or comOpen == False): # global variable that can interupt the measuremetn
             if comOpen == False:
@@ -73,8 +75,10 @@ def record_data(): # starts measurements when the start btton is applied
 def OnOff_plot():
     global onOffPlot
     if onOffPlot== False:
+        plotOnOff.config(image=on)
         onOffPlot = True
     else:
+        plotOnOff.config(image=off)
         onOffPlot = False
 
 def save_data(): # stp button is applyed the fucktion saves data to measurment file
@@ -84,7 +88,6 @@ def save_data(): # stp button is applyed the fucktion saves data to measurment f
         else:
             name = inputtxt.get()
         data = pd.DataFrame({'time': t_val, 'pressure': pressure})
-        Path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\C_mes_AD7746'
         data.to_excel(Path+'/' + name +'.xlsx')
         print("Register measurements")
     else:
@@ -116,14 +119,16 @@ def serialPortArduino(): # Searches if Arduino Uno is connecto or not
 def comActive():
     global comOpen
     portVar = serialPortArduino()
-    if portVar == False:
+    if(portVar == False or comOpen==True):
         comOpen = False
         serialInst.close()
+        startSerial.config(image=off)
     else:
         serialInst.baudrate = 115200
         serialInst.port = portVar
         serialInst.open()
         serialInst.reset_input_buffer()
+        startSerial.config(image=on)
         comOpen = True
 
 #------ Creat buttons of little user interface to control the plot starts etc
@@ -132,26 +137,36 @@ root.title('Real time plot')
 root.config(background= 'light blue')
 root.geometry('400x200') #set the window size
 
+#define fgures
+on = tk.PhotoImage(file=Path + "/Python_scripts/on.png")
+off = tk.PhotoImage(file=Path + "/Python_scripts/off.png")
+
 # Register data button
+serialLabel = tk.Label(root, text="Serial On/Off", font= ('calbiri', 15))
+serialLabel.place(x = 10, y = 20)
 root.update()
-startSerial = tk.Button(root, text= "Start Serial", font= ('calbiri',12), command= lambda: comActive())
-startSerial.place(x= 10, y=10)
-startSerial.update()
+startSerial = tk.Button(root, image=off, font= ('calbiri',12), command= lambda: comActive()) #text= "Serial On/Off",
+startSerial.place(x= serialLabel.winfo_x()+serialLabel.winfo_width()+20, y=10)
 
 # Start Button
 root.update()
-record = tk.Button(root, text="Record On/Off", font= ('calbiri', 12), command= lambda: record_data())
-record.place(x= 10, y=startSerial.winfo_y()+40)
+recordLabel = tk.Label(root, text="Record On/Off", font= ('calbiri', 15))
+recordLabel.place(x = 10, y = serialLabel.winfo_y()+50)
+root.update()
+record = tk.Button(root, image=off,  command= lambda: record_data())
+record.place(x= recordLabel.winfo_x()+recordLabel.winfo_width()+20, y=recordLabel.winfo_y()-8)
 
 # Plot on off
+plotLabel = tk.Label(root, text="Plot On/Off", font= ('calbiri', 15))
+plotLabel.place(x = 10, y = recordLabel.winfo_y()+50)
 root.update()
-plotOnOff = tk.Button(root, text= "Plot On/Off", font= ('calbiri',12), command= lambda: OnOff_plot())
-plotOnOff.place(x= 10, y= record.winfo_y()+40)
+plotOnOff = tk.Button(root, image=off, font= ('calbiri',15), command= lambda: OnOff_plot())
+plotOnOff.place(x= plotLabel.winfo_x()+plotLabel.winfo_width()+20, y= plotLabel.winfo_y()-8)
 
 # save data button
 root.update()
 save = tk.Button(root, text= "Save", font= ('calbiri',12), command= lambda: save_data())
-save.place(x=plotOnOff.winfo_x(), y=plotOnOff.winfo_reqwidth() + 40)
+save.place(x=10, y=plotLabel.winfo_y() + 40)
 
 # tell ui the name of the saved file
 root.update()
