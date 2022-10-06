@@ -6,6 +6,7 @@ import serial.tools.list_ports # Serial library
 import matplotlib.pyplot as plt
 import tkinter as tk #tkinter for GUI
 import pandas as pd # for writing into a .xml file
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,NavigationToolbar2Tk)
 import time
 
 import numpy as np
@@ -22,16 +23,12 @@ comOpen = False
 Path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\C_mes_AD7746'
 
 # function that plots the Serial data from the arduino
-def plot(t,data):
-    plt.ion()
-    plt.clf()
-    plt.title('Serial value from Arduino')
-    plt.grid(True)
-    plt.ylabel('Values')
-    plt.xlabel('time')
-    plt.plot(t,data)
-    plt.show()
-    plt.pause(0.001)
+def plotFunc(t,data):
+    plot1.clear()
+    plot1.plot(t, data, 'b')
+    canvas.draw()
+    # creating the Matplotlib toolbar
+    root.update()
 # Fuction triggered by GUI
 def record_data(): # starts measurements when the start btton is applied
     t = 0
@@ -67,7 +64,7 @@ def record_data(): # starts measurements when the start btton is applied
                 t_val.append(t)
             if onOffPlot == True: ## hadels the start and stop of the data plot
                 a = len(t_val)
-                plot(t_val[a-200:a], pressure[a-200:a]) # actualize the plot after every reading
+                plotFunc(t_val[a-200:a], pressure[a-200:a]) # actualize the plot after every reading
             else:
                 #plt.clf()
                 root.update()
@@ -135,7 +132,7 @@ def comActive():
 root = tk.Tk()
 root.title('Real time plot')
 root.config(background= 'light blue')
-root.geometry('400x200') #set the window size
+root.geometry('1000x600') #set the window size
 
 #define fgures
 on = tk.PhotoImage(file=Path + "/Python_scripts/on.png")
@@ -172,6 +169,22 @@ save.place(x=10, y=plotLabel.winfo_y() + 40)
 root.update()
 inputtxt = tk.Entry(root,width=20, bg="black", fg="white", borderwidth=5)
 inputtxt.place(x=save.winfo_x()+save.winfo_width()+20,y=save.winfo_y()+2)
+root.update()
+
+#------The figure on the user interface window------#
+fig = plt.figure()
+plot1 = fig.add_subplot(111)
+plot1.set_title('Serial Data')
+plot1.set_xlabel('t')
+plot1.set_ylabel('data')
+plot1.set_xlim(0,200*Ts)
+# creating the Tkinter canvas
+# containing the Matplotlib figure
+canvas = FigureCanvasTkAgg(fig,master=root)
+canvas.get_tk_widget().place(x=record.winfo_x()+record.winfo_width()+20 , y=startSerial.winfo_y()) # placing the canvas on the Tkinter window
+canvas.draw()
+toolbar = NavigationToolbar2Tk(canvas,root)
+toolbar.update()
 root.update()
 
 root.mainloop()
