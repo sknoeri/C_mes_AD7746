@@ -25,7 +25,12 @@ Path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Ma
 # function that plots the Serial data from the arduino
 def plotFunc(t,data):
     plot1.clear()
-    plot1.plot(t, data, 'b')
+    plot1.set_title('Serial Data')
+    plot1.set_xlabel('t')
+    plot1.set_ylabel('data')
+    plot1.plot(t, data, 'b', label='pressure')
+    plot1.legend()
+    plot1.grid()
     canvas.draw()
     # creating the Matplotlib toolbar
     root.update()
@@ -39,16 +44,16 @@ def record_data(): # starts measurements when the start btton is applied
         recordStop =False
         plt.close()
         record.config(image=on)
-        print("Start measurements")
+        Output.insert("1.0","Start measurements \n")
     else:
         recordStop = True
         record.config(image=off)
     while True: # infinite loop that reads the serial buffer of the Arduino and starts the plot
         if(recordStop == True or comOpen == False): # global variable that can interupt the measuremetn
             if comOpen == False:
-                print("No arduino Uno connected")
+                Output.insert("1.0","No arduino Uno connected \n")
             else:
-                print("Rcording is interruped")
+                Output.insert("1.0","Rcording is interruped \n")
             break
         if serialInst.in_waiting: # waits until charcters recived from Arduino
             t = t + Ts
@@ -58,7 +63,7 @@ def record_data(): # starts measurements when the start btton is applied
             if float_or_not == False: # if not float append 0 to data vector
                 pressure.append(0)
                 t_val.append(t)
-                print(packet)
+                Output.insert("1.0",packet +'\n')
             else: # append data vector
                 pressure.append(float(packet))
                 t_val.append(t)
@@ -84,11 +89,11 @@ def save_data(): # stp button is applyed the fucktion saves data to measurment f
             name = 'NoName'
         else:
             name = inputtxt.get()
-        data = pd.DataFrame({'time': t_val, 'pressure': pressure})
+        data = pd.DataFrame({'1.0': t_val, 'pressure': pressure})
         data.to_excel(Path+'/' + name +'.xlsx')
-        print("Register measurements")
+        Output.insert("1.0","Register measurements \n")
     else:
-        print("Emty file")
+        Output.insert("1.0","Emty file \n")
 
 # fuction that searches if and where a Arduino is connected
 def serialPortArduino(): # Searches if Arduino Uno is connecto or not
@@ -100,17 +105,16 @@ def serialPortArduino(): # Searches if Arduino Uno is connecto or not
     portVar = False
     portList = []
     if len(ports)==0:
-        print("No port is conected")
+        Output.insert("1.0","No port is conected \n")
 
     for onePort in ports: # loops trough all connected ports and appends them to an array
         portName = str(onePort)
         portList.append(portName)
-        print(portName)
         if "Arduino Uno" in portName: # checks if one of the ports is an Arduino uno
             portVar = portName[0:5]
-            print("Arduino Uno conneced to Port: " + portVar)
+            Output.insert("1.0","Arduino Uno conneced to Port: " + portVar + '\n')
         else:
-            print("No Arduino Uno conected")
+            Output.insert("1.0","No Arduino Uno conected \n")
     return portVar # false or portname
 ########### Initialise the Serial port if Arduino is connected
 def comActive():
@@ -171,13 +175,18 @@ inputtxt = tk.Entry(root,width=20, bg="black", fg="white", borderwidth=5)
 inputtxt.place(x=save.winfo_x()+save.winfo_width()+20,y=save.winfo_y()+2)
 root.update()
 
+#------ puttig the text log field ----
+Output = tk.Text(root, height=20,width=30,bg="light cyan")
+Output.place(x=10, y=inputtxt.winfo_y()+inputtxt.winfo_height() + 10 )
+root.update()
+
 #------The figure on the user interface window------#
 fig = plt.figure()
 plot1 = fig.add_subplot(111)
 plot1.set_title('Serial Data')
 plot1.set_xlabel('t')
 plot1.set_ylabel('data')
-plot1.set_xlim(0,200*Ts)
+plot1.grid()
 # creating the Tkinter canvas
 # containing the Matplotlib figure
 canvas = FigureCanvasTkAgg(fig,master=root)
