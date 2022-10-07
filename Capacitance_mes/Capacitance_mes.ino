@@ -1,4 +1,150 @@
+
+//#include <Arduino_FreeRTOS.h>
 #include <Wire.h>
+#define I2C_adress 0x48
+
+// define Task for for control
+//void Cpacitance( void *pvParameters );
+
+// the setup function runs once when you press reset or power the board
+void setup() {
+  pinMode(5,OUTPUT);
+  // initialize serial communication at 9600 bits per second:
+  Serial.begin(9600);
+  Serial.println("Serial initalized");
+  delay(100);
+  Wire.begin();
+  Wire.beginTransmission(I2C_adress); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B100 1000
+  Wire.write(0x07);   // sets register pointer to the given adress 0x07
+  Wire.write(0x80);   // gives instructions to the device at adress 0x07 single conversion enabled
+  Wire.write(0x00);   // gives instructions to the device at adress 0x08 voltage and temp sensordisconected
+  Wire.write(0x2B);   // gives instructions to the device at adress 0x09 EXCA and EXCB pin configured
+  Wire.write(0x11);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading
+  Wire.write(0x00);   // gives instructions to the device at adress 0x0B no calibration offset done for cap mesure chanel A
+  Wire.write(0x00);   // gives instructions to the device at adress 0x0B no calibration offset done for cap mesure chanel B
+  Wire.endTransmission();
+
+  delay(100);
+  Serial.println("transmitted data");
+  /*unsigned char data[2];
+  readRegisters(0x01,3,data[2]);
+  Serial.print("Cadp data 1:");Serial.println(data[0],BIN);
+  Serial.print("Cadp data 2:");Serial.println(data[1],BIN);
+  Serial.print("Cadp data 3:");Serial.println(data[2],BIN);*/
+  // Now set up two Tasks to run independently.
+  /*xTaskCreate(
+    Cpacitance
+    ,  "Cpacitance"  // A name just for humans
+    ,  128  // This stack size can be checked & adjusted by reading the Stack Highwater
+    ,  NULL //Parameters for the task
+    ,  2  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
+    ,  NULL ); //Task Handle
+
+  // Now the Task scheduler, which takes over control of scheduling individual Tasks, is automatically started.*/
+}
+
+void loop()
+{
+  Serial.println("Hallo");
+  delay(1000);
+  // Empty. Things are done in Tasks.
+  unsigned char buffer[4];
+  Wire.beginTransmission(I2C_adress);
+  Wire.write(0x01);  // register to read
+  Wire.endTransmission();
+  Serial.println("Set pointer to 0x1");
+  Wire.requestFrom(I2C_adress, 4); // read a byte
+  char i = 0;
+  while (i<4) {
+    while(!Wire.available()) {
+      // waiting
+      Serial.print("waits on wire");
+    }
+    buffer[i] = Wire.read();
+    i++;
+  }
+  uint32_t C=0;
+  C = ((uint32_t)buffer[1]<<16)|((uint32_t)buffer[2]<<8)|((uint32_t)buffer[3]); // No fixpoint aritmeritc is done yet
+  double capa = 8000*(double)C/16777215; // 8*C/(2^24-1)-4 ensures value between -4 and 8. Is the capacitance in 10^3 pico farad
+  Serial.print("Buffer 0: ");Serial.println(buffer[0]);
+  Serial.print("Buffer 1: ");Serial.println(buffer[1]);
+  Serial.print("Buffer 2: ");Serial.println(buffer[2]);
+  Serial.print("Buffer 3: ");Serial.println(buffer[3]);
+  Serial.println(C);
+  Serial.println(capa);
+}
+
+/*--------------------------------------------------*/
+/*---------------------- Tasks ---------------------*/
+/*--------------------------------------------------*/
+
+/*void Cpacitance( void *pvParameters __attribute__((unused)) )  // This is a Task.
+{
+ 
+  for (;;) // A Task shall never return or exit.
+  {
+    vTaskDelay(100 / portTICK_PERIOD_MS);  // one tick delay (10ms) in between reads for stability
+  }
+}*/
+
+
+void readRegisters(unsigned char r, unsigned int numberOfBytes, unsigned char buffer[])
+{
+  unsigned char v;
+  Wire.beginTransmission(I2C_adress);
+  Wire.write(r);  // register to read
+  Wire.endTransmission();
+
+  Wire.requestFrom(I2C_adress, numberOfBytes); // read a byte
+  char i = 0;
+  while (i<numberOfBytes) {
+    while(!Wire.available()) {
+      // waiting
+      Serial.print("waits on wire");
+    }
+    buffer[i] = Wire.read();
+    i++;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*#include <Wire.h>
 
 //I/O pin configuration registers
 #define DIRD *((volatile unsigned char*) 0x2A) // Data dircetion register of port D
@@ -51,4 +197,4 @@ ISR(TIMER2_OVF_vect){
     Serial.print("Tis is B");Serial.println(PORTB);
     //digitalWrite(13,1);
   }
-}
+}*/
