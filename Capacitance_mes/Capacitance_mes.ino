@@ -7,7 +7,7 @@ double capa=0;
 // the setup function runs once when you press reset or power the board
 void setup() {
   // initialize serial communication at 9600 bits per second:
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("Serial initalized");
   delay(100);
   Wire.begin();
@@ -28,9 +28,10 @@ void setup() {
 void loop()
 {
     
-  capa=readCNanof();
+  
   delay(30);
   Serial.println(capa);
+  capa=readCNanof();
 }
 
 

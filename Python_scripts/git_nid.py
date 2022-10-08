@@ -10,7 +10,7 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,NavigationToolb
 import time
 
 import numpy as np
-Ts = 0.100
+Ts = 0.03
 # initalize the serial port
 serialInst = serial.Serial()
 # registered variables
@@ -56,7 +56,6 @@ def record_data(): # starts measurements when the start btton is applied
                 Output.insert("1.0","No arduino Uno connected \n") # puts string a beginning of text field
             else:
                 Output.insert("1.0","Rcording is interruped \n") # puts string a beginning of text field
-                print(len(t_val))
             break
         if serialInst.in_waiting: # waits until charcters recived from Arduino
             t = t + Ts
