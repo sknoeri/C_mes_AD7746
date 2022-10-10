@@ -58,9 +58,10 @@ def record_data(): # starts measurements when the start btton is applied
         if(recordStop == True or comOpen == False): # global variable that can interupt the measuremetn
             if comOpen == False:
                 Output.insert("1.0","No arduino Uno connected \n") # puts string a beginning of text field
+                break
             else:
                 Output.insert("1.0","Rcording is interruped \n") # puts string a beginning of text field
-            break
+                break
         if serialInst.in_waiting: # waits until charcters recived from Arduino
             t = t + Ts
             ## Make function out of fhtis
@@ -82,7 +83,7 @@ def record_data(): # starts measurements when the start btton is applied
             if float_or_not == False: # if not float append 0 to data vector
                 pressure.append(0)
                 t_val.append(t)
-                Output.insert("1.0",packet +'\n') # puts string a beginning of text field
+                Output.insert("1.0","Reciced data: "+packet +'\n') # puts string a beginning of text field
             else: # append data vector
                 pressure.append(float(packet))
                 t_val.append(t)
@@ -140,10 +141,10 @@ def comActive():
     global comOpen
     portVar = serialPortArduino()
     if(portVar == False or comOpen==True):
+        startSerial.config(image=off) # shows the off button
+        Output.insert('1.0','Serial port is closed\n')
         comOpen = False
         serialInst.close()
-        startSerial.config(image=off) # shows the off button
-        Output.insert('1.0','Serial port is closed or inexisten \n')
     else:
         try:
             serialInst.baudrate = int(baudText.get())
