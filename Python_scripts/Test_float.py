@@ -1,36 +1,17 @@
-from tkinter import *
+# This is a sample Python script.
 
-root = Tk()
-root.geometry("300x300")
-root.title(" Q&A ")
+# Press Umschalt+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import serial
+import matplotlib.pyplot as plt
+import numpy as np
 
-
-def Take_input():
-    INPUT = inputtxt.get("1.0", "end-1c")
-    print(INPUT)
-    if (INPUT == "120"):
-        Output.insert(END, 'Correct')
-    else:
-        Output.insert(END, "Wrong answer")
-
-
-l = Label(text="What is 24 * 5 ? ")
-inputtxt = Text(root, height=10,
-                width=25,
-                bg="light yellow")
-
-Output = Text(root, height=5,
-              width=25,
-              bg="light cyan")
-
-Display = Button(root, height=2,
-                 width=20,
-                 text="Show",
-                 command=lambda: Take_input())
-
-l.pack()
-inputtxt.pack()
-Display.pack()
-Output.pack()
-
-mainloop()
+serInst = serial.Serial('COM10',timeout=0.1,baudrate=11520)
+serInst.reset_input_buffer()
+# serInst.open()
+# serInst.close()
+while True:
+    if serInst.in_waiting:  # waits until charcters recived from Arduino    ## Make function out of fhtis
+        bites = serInst.readline()  # reads recived bytes
+        packet = str(bites.decode('utf')).replace('\r\n', '',1)  # decodes recived bytes and removes \n\r from the reading
+        print(packet)
