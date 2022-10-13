@@ -13,12 +13,13 @@ void setup() {
   Wire.begin();
   Wire.beginTransmission(I2C_adress); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B100 1000
   Wire.write(0x07);   // sets register pointer to the given adress 0x07
-  Wire.write(0x80);   // gives instructions to the device at adress 0x07 single conversion enabled
+  Wire.write(0xC0);   // gives instructions to the device at adress 0x07 single conversion enabled
   Wire.write(0x00);   // gives instructions to the device at adress 0x08 voltage and temp sensordisconected
   Wire.write(0x2B);   // gives instructions to the device at adress 0x09 EXCA and EXCB pin configured
   Wire.write(0x11);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading
-  Wire.write(0xFF);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
-  Wire.write(0x7F);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
+  Wire.write(0x9D);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
+                      // this shit must be calibrated they have +-20% error on the device 9D 9E for channel A
+  Wire.write(0x80);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
   // Atention if second  last comand is 0x00 then it doesnt work if 0xFF then we can measure full range on cahnel B for channel A this doesnt matter
   Wire.endTransmission();
   delay(100);
@@ -28,14 +29,14 @@ void setup() {
 
 void loop()
 {
-  readChanAorB('A');
-  delay(1000);
+  //readChanAorB('A');
+  delay(500);
   capa=readCFemtof();
   Serial.println(capa);
-  readChanAorB('B');
-  delay(1000);
-  capa=readCFemtof();
-  Serial.println(capa);
+  //readChanAorB('B');
+  //delay(10);
+  //capa=readCFemtof();
+  //Serial.println(capa);
   
 }
 
@@ -44,7 +45,7 @@ uint32_t readCFemtof()
 {
   unsigned char buffer[4];
   Wire.beginTransmission(I2C_adress);
-  Wire.write(0x01);  // register to read
+  Wire.write(0x00);  // register to read
   Wire.endTransmission();
   //Serial.println("Set pointer to 0x1");
   Wire.requestFrom(I2C_adress, 4); // read a byte
@@ -63,7 +64,7 @@ uint32_t readCFemtof()
   Serial.print("Buffer 2: ");Serial.println(buffer[2]);
   Serial.print("Buffer 3: ");Serial.println(buffer[3]);
   Serial.println(C);*/
-  return 8000*(double)C/16777215; // 8000*C/(2^24-1) ensures value between 0 and 8pf. Is the capacitance in femto farad.
+  return 8192*(double)C/16777215; // 8192*C/(2^24-1) ensures value between 0 and 8.192pf. Is the capacitance in femto farad.
 }
 
 void readChanAorB(char chanel)
