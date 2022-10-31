@@ -51,6 +51,8 @@ def record_data(): # starts measurements when the start btton is applied
         Output.insert("1.0","Start measurements \n") # puts string a beginning of text field
         pressure = []
         t_val = []
+        t_plot = np.arange(0,200,1)
+        p_plot = np.zeros(200)
     else:
         recordStop = True
         record.config(image=off) # shows the off button
@@ -89,7 +91,12 @@ def record_data(): # starts measurements when the start btton is applied
                 t_val.append(t)
             if onOffPlot == True: ## hadels the start and stop of the data plot
                 a = len(t_val)
-                plotFunc(t_val[a-200:a], pressure[a-200:a]) # actualize the plot after every reading
+                if(a>200):
+                    t_plot = t_val[a-200:a]
+                    p_plot = pressure[a-200:a]
+                else:
+                    p_plot[200-a:200] = pressure
+                plotFunc(t_plot, p_plot)  # actualize the plot after every reading
             else:
                 #plt.clf()
                 root.update()
