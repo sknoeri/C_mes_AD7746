@@ -29,7 +29,7 @@ void setup() {
 
 void loop()
 {
-  //readChanAorB('A');
+  readChanAorB('A');
   delay(500);
   capa=readCFemtof();
   Serial.println(capa);
