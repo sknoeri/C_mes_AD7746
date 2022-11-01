@@ -17,7 +17,7 @@ void setup() {
   Wire.write(0x00);   // gives instructions to the device at adress 0x08 voltage and temp sensordisconected
   Wire.write(0x2B);   // gives instructions to the device at adress 0x09 EXCA and EXCB pin configured
   Wire.write(0x11);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading
-  Wire.write(0x9D);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
+  Wire.write(0xAA);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
                       // this shit must be calibrated they have +-20% error on the device 9D 9E for channel A
   Wire.write(0x80);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
   // Atention if second  last comand is 0x00 then it doesnt work if 0xFF then we can measure full range on cahnel B for channel A this doesnt matter
@@ -30,7 +30,7 @@ void setup() {
 void loop()
 {
   readChanAorB('A');
-  delay(500);
+  delay(100);
   capa=readCFemtof();
   Serial.println(capa);
   //readChanAorB('B');
