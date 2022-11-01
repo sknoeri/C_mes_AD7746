@@ -11,7 +11,8 @@ import multiprocessing
 import time
 
 import numpy as np
-Ts = 0.03
+Ts = 0.1
+widowSize = 200
 # initalize the serial port
 serialInst = serial.Serial()
 # registered variables
@@ -29,7 +30,7 @@ def plotFunc(t,data):
     plot1.set_title('Serial Data')
     plot1.set_xlabel('t')
     plot1.set_ylabel('data')
-    plot1.plot(t, data, 'b', label='pressure')
+    plot1.plot(t, data, 'b', label='capacitance fF')
     plot1.legend()
     plot1.grid()
     canvas.draw()
@@ -44,6 +45,7 @@ def record_data(): # starts measurements when the start btton is applied
     global t_val
     global pressure
     global comOpen
+    global widowSize
     if(recordStop == True and comOpen != False):# Starts record when COM is open and recod is enabled by GUI
         recordStop =False
         plt.close()
@@ -51,8 +53,8 @@ def record_data(): # starts measurements when the start btton is applied
         Output.insert("1.0","Start measurements \n") # puts string a beginning of text field
         pressure = []
         t_val = []
-        t_plot = np.arange(0,200,1)
-        p_plot = np.zeros(200)
+        ##t_plot = np.arange(0,widowSize*Ts,Ts)
+        #p_plot = np.zeros(widowSize)
     else:
         recordStop = True
         record.config(image=off) # shows the off button
@@ -91,11 +93,14 @@ def record_data(): # starts measurements when the start btton is applied
                 t_val.append(t)
             if onOffPlot == True: ## hadels the start and stop of the data plot
                 a = len(t_val)
-                if(a>200):
-                    t_plot = t_val[a-200:a]
-                    p_plot = pressure[a-200:a]
+                if(a>widowSize):
+                    t_plot = t_val[a-widowSize:a]
+                    p_plot = pressure[a-widowSize:a]
                 else:
-                    p_plot[200-a:200] = pressure
+                    p_plot = np.zeros(widowSize)
+                    p_plot[widowSize-len(pressure):widowSize] = pressure
+                    p_plot[0:widowSize-len(pressure)] = np.zeros(widowSize-len(pressure))
+                    t_plot = np.arange(0,widowSize*Ts,Ts)
                 plotFunc(t_plot, p_plot)  # actualize the plot after every reading
             else:
                 #plt.clf()
@@ -103,8 +108,14 @@ def record_data(): # starts measurements when the start btton is applied
 # Turns on/off the plot
 def OnOff_plot():
     global onOffPlot
+    global widowSize
     if onOffPlot== False:
         plotOnOff.config(image=on) # shows the ON button
+        float_or_not = plotSize.get().replace('.', '', 1).isdigit()
+        if float_or_not:
+            widowSize = int(plotSize.get())
+        else:
+            Output.insert('Plot range must be a number')
         onOffPlot = True
     else:
         plotOnOff.config(image=off) # shows the off button
@@ -116,7 +127,7 @@ def save_data(): # stp button is applyed the fucktion saves data to measurment f
             name = 'NoName'
         else:
             name = fileName.get()
-        data = pd.DataFrame({'tine': t_val, 'pressure': pressure})
+        data = pd.DataFrame({'time': t_val, 'pressure': pressure})
         data.to_excel(Path+'/' + name +'.xlsx')
         Output.insert("1.0","Register measurements to: \n"+Path+'/' + name +'.xlsx \n') # puts string a beginning of text field
     else:
@@ -207,6 +218,9 @@ if __name__ == '__main__':
     root.update()
     plotOnOff = tk.Button(root, image=off, font= ('calbiri',15), command= lambda: OnOff_plot())
     plotOnOff.place(x= plotLabel.winfo_x()+plotLabel.winfo_width()+20, y= plotLabel.winfo_y()-8)
+    root.update()
+    plotSize = tk.Entry(root, width=10, borderwidth=2, font=("Helvetica", 15))
+    plotSize.place(x=plotOnOff.winfo_x() + plotOnOff.winfo_width() + 20, y=plotOnOff.winfo_y() + 5)
 
     # save data button
     root.update()
