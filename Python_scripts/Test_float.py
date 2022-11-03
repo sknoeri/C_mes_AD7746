@@ -19,3 +19,4 @@ import numpy as np
 
 print(len(np.arange(0,50,1)))
 print(len(np.zeros(50)))
+print(len(np.zeros(50)))

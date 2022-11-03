@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e6d02b3-8290-4160-8d42-077a0799a631" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Capacitance_mes/Capacitance_mes.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../Capacitance_mes/Capacitance_mes.ino" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test_float.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_float.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redMesures.py" beforeDir="false" afterPath="$PROJECT_DIR$/redMesures.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
