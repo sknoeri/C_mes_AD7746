@@ -1,0 +1,8 @@
+1 pfd: 1206CC1.0
+2 pfd: 0805CC2
+3 pfd: 0805CC3
+5 pfd: 0805CC5
+10 pfd: 1206CC10
+15 pfd: 	CC15
+20 pfd: 1206CC20
+33 pfd: 1206CC33
