@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e6d02b3-8290-4160-8d42-077a0799a631" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Capa0.25_oil_droplet_smal_a0.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Capa0.25_oil_droplet_smal_a0.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Config_AD7746/Config_AD7746.ino" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asd.py" beforeDir="false" afterPath="$PROJECT_DIR$/Measurments_capa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Measurments_capa.py" beforeDir="false" afterPath="$PROJECT_DIR$/Measurments_capa.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +45,7 @@
       <recent name="C:\Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Python_scripts" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Measurments_capa">
+  <component name="RunManager" selected="Python.redMesures (1)">
     <configuration name="Measurments_capa" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Python_scripts" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -180,8 +182,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Measurments_capa" />
         <item itemvalue="Python.redMesures (1)" />
+        <item itemvalue="Python.Measurments_capa" />
         <item itemvalue="Python.Test_float" />
         <item itemvalue="Python.plotBestFigs" />
       </list>
