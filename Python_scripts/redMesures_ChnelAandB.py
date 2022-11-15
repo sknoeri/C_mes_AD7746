@@ -11,26 +11,31 @@ import multiprocessing
 import time
 
 import numpy as np
-Ts = 0.05
+Ts = 0.022
 widowSize = 200
 # initalize the serial port
 serialInst = serial.Serial()
 # registered variables
-pressure = []
-t_val = []
+valuesA = []
+valuesB = []
+t_valA = []
+t_valB = []
 # conditions to start plotting or to stop it and to register measurements
 recordStop = True
 onOffPlot = False
 comOpen = False
+
 Path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\C_mes_AD7746'
 
 # function that plots the Serial data from the arduino
-def plotFunc(t,data):
+def plotFunc(ta,data1,tb,data2):
     plot1.clear()
     plot1.set_title('Serial Data')
     plot1.set_xlabel('t')
     plot1.set_ylabel('data')
-    plot1.plot(t, data, 'b', label='capacitance fF')
+    plot1.plot(ta, data1, 'b', label='Chanel A C[fF]')
+    if data2 is not None:
+        plot1.plot(tb, data2, 'r', label='Chanel B C[fF]')
     plot1.legend()
     plot1.grid()
     canvas.draw()
@@ -40,10 +45,13 @@ def plotFunc(t,data):
 
 # Fuction triggered by GUI
 def record_data(): # starts measurements when the start btton is applied
-    t = 0
+    ta = 0
+    tb = 0
     global recordStop
-    global t_val
-    global pressure
+    global t_valA
+    global t_valB
+    global valuesA
+    global valuesB
     global comOpen
     global widowSize
     if(recordStop == True and comOpen != False):# Starts record when COM is open and recod is enabled by GUI
@@ -51,10 +59,12 @@ def record_data(): # starts measurements when the start btton is applied
         plt.close()
         record.config(image=on) # shows the ON button
         Output.insert("1.0","Start measurements \n") # puts string a beginning of text field
-        pressure = []
-        t_val = []
+        valuesA = []
+        valuesB = []
+        t_valA = []
+        t_valB = []
         ##t_plot = np.arange(0,widowSize*Ts,Ts)
-        #p_plot = np.zeros(widowSize)
+        #v_plotA = np.zeros(widowSize)
     else:
         recordStop = True
         record.config(image=off) # shows the off button
@@ -71,7 +81,6 @@ def record_data(): # starts measurements when the start btton is applied
                 Output.insert("1.0","Rcording is interruped \n") # puts string a beginning of text field
                 break
         if serialInst.in_waiting: # waits until charcters recived from Arduino
-            t = t + Ts
             ## Make function out of fhtis
             try:
                 bites = serialInst.readline() # reads recived bytes
@@ -87,29 +96,59 @@ def record_data(): # starts measurements when the start btton is applied
                 Output.insert('1.0', 'Cant decode line')
                 break
             #########
-            float_or_not = packet.replace('.', '', 1).isdigit() # checks if number is convertible to float
+            float_or_not = packet[1:].replace('.', '', 1).isdigit()  # checks if number is convertible to float
+            if(packet[0]=='A'):
+                l = True
+            else:
+                l = False
             if float_or_not == False: # if not float append 0 to data vector
-                pressure.append(0)
-                t_val.append(t)
+                valuesA.append(0)
+                valuesB.append(0)
+                t_valA.append(ta)
+                t_valB.append(tb)
                 Output.insert("1.0","Reciced data: "+packet +'\n') # puts string a beginning of text field
             else: # append data vector
-                pressure.append(float(packet))
-                t_val.append(t)
+                if packet[0] == 'A':
+                    ta = ta + Ts
+                    packet = packet[1:]
+                    valuesA.append(float(packet))
+                    t_valA.append(ta)
+                if packet[0] == 'B':
+                    tb = tb + Ts
+                    packet = packet[1:]
+                    valuesB.append(float(packet))
+                    t_valB.append(tb)
+                # if (packet[0] != 'B' and packet[0] != 'A'):
+
             if onOffPlot == True: ## hadels the start and stop of the data plot
-                a = len(t_val)
-                if(a>widowSize):
-                    t_plot = t_val[a-widowSize:a]
-                    p_plot = pressure[a-widowSize:a]
+                a = len(t_valA)
+                b = len(t_valB)
+                if(a>=widowSize):
+                    t_plota = t_valA[a - widowSize:a]
+                    v_plotA = valuesA[a - widowSize:a]
                 else:
-                    p_plot = np.zeros(widowSize)
-                    p_plot[widowSize-len(pressure):widowSize] = pressure
-                    p_plot[0:widowSize-len(pressure)] = np.zeros(widowSize-len(pressure))
-                    t_plot = np.arange(0,widowSize*Ts,Ts)
+                    ## for the values of chanel A
+
+                    v_plotA = np.zeros(widowSize)
+                    v_plotA[widowSize-len(valuesA):widowSize] = valuesA
+                    v_plotA[0:widowSize-len(valuesA)] = np.zeros(widowSize - len(valuesA))
+                    t_plota = np.arange(widowSize)* Ts
+                if(b>=widowSize):
+                    t_plotb = t_valB[b - widowSize:b]
+                    v_plotB = valuesB[b - widowSize:b]
+                else:
+                    # for the values of chanel B
+                    v_plotB = np.zeros(widowSize)
+                    v_plotB[widowSize - len(valuesB):widowSize] = valuesB
+                    v_plotB[0:widowSize - len(valuesB)] = np.zeros(widowSize - len(valuesB))
+                    t_plotb = np.arange(widowSize)*Ts
                 if cnt>1000:
-                    plotFunc(t_plot, p_plot)  # actualize the plot after every reading
+                    # print('lenth of B'+str(len(t_plotb)))
+                    # print('lenth of A'+str(len(t_plota)))
+                    plotFunc(t_plota, v_plotA,t_plotb, v_plotB)  # actualize the plot after every reading
                     cnt=0
             else:
-                if cnt2 > 1000:
+                if cnt > 1000:
                     #plt.clf()
                     root.update()
                     cnt2=0
@@ -130,20 +169,14 @@ def OnOff_plot():
         onOffPlot = False
 
 def save_data(): # stp button is applyed the fucktion saves data to measurment file
-    if (len(t_val)>0):
+    if (len(t_valA)>0):
         if(fileName.get()== ''):
             name = 'NoName'
         else:
             name = fileName.get()
-        data = pd.DataFrame({'time': t_val, 'pressure': pressure})
-        try:
-            data.to_excel(Path+'/' + name +'.xlsx')
-            Output.insert("1.0",
-                          "Register measurements to: \n" + Path + '/' + name + '.xlsx \n')  # puts string a beginning of text field
-        except:
-            data.to_csv(Path+'/' + name +'.csv')
-            Output.insert("1.0",
-                          "Register measurements to: \n" + Path + '/' + name + '.csv \n')  # puts string a beginning of text field
+        data = pd.DataFrame({'timeA': t_valA, 'A chanel': valuesA, 'timeB': t_valB, 'B channel': valuesB})
+        data.to_excel(Path+'/' + name +'.xlsx')
+        Output.insert("1.0","Register measurements to: \n"+Path+'/' + name +'.xlsx \n') # puts string a beginning of text field
     else:
         Output.insert("1.0","Emty file \n") # puts string a beginning of text field
 
