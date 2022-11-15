@@ -2,7 +2,11 @@
 
 // Defnitions of AD7746
 #define I2C_adress 0x48
-double capa=0;
+double capaA=0;
+double capaB=0;
+volatile int cnt=0;
+volatile int cntA=0;
+volatile int cntB=0;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -16,7 +20,7 @@ void setup() {
   Wire.write(0xC0);   // gives instructions to the device at adress 0x07 single conversion enabled
   Wire.write(0x00);   // gives instructions to the device at adress 0x08 voltage and temp sensordisconected
   Wire.write(0x1B);   // gives instructions to the device at adress 0x09 EXCA and EXCB pin configured EXCA enable EXCB inverted enabled
-  Wire.write(0x11);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading
+  Wire.write(0x01);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading  39
   Wire.write(0x99);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
                       // this shit must be calibrated they have +-20% error on the device 9D 9E for channel A
   Wire.write(0x80);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
@@ -26,22 +30,69 @@ void setup() {
   Wire.endTransmission();
   delay(100);
   Serial.println("transmitted data");
+  delay(100);
+  attachInterrupt(1,reading,FALLING);
+  pinMode(13,1);
 }
 
 
 void loop()
 {
+  if(cntA==1){
+    readChanAorB('B');
+    capaA=readCFemtof();
+    cntA=0;
+    digitalWrite(13,0);
+    Serial.print('A');Serial.println(capaA);
+    
+    
+  }
+  if(cntB==1){
+    readChanAorB('A');
+    capaB=readCFemtof();
+    cntB=0;
+    digitalWrite(13,0);
+    Serial.print('B');Serial.println(capaB);
+    
+    
+    
+  }
+  
+  /*delay(100);
   readChanAorB('A');
-  delay(100);
   capa=readCFemtof();
-  Serial.println(capa);
-  //readChanAorB('B');
-  //delay(10);
-  //capa=readCFemtof();
-  //Serial.println(capa);
+  Serial.print('A');Serial.println(capa);
+  delay(1);
+  readChanAorB('B');
+  capa=readCFemtof();
+  Serial.print('B');Serial.println(capa);*/
   
 }
 
+void reading(){
+  if(cnt==0 && cntB==0){
+    cntA=1;
+    cnt=1;
+    digitalWrite(13,1);
+  }
+  if(cnt==1 && cntA==0){
+    cntB=1;
+    cnt=0;
+    digitalWrite(13,1);
+  }
+}
+ISR(INT1_vet){
+   if(cnt==0 && cntB==0){
+    cntA=1;
+    cnt=1;
+    digitalWrite(13,1);
+  }
+  if(cnt==1 && cntA==0){
+    cntB=1;
+    cnt=0;
+    digitalWrite(13,1);
+  }
+}
 
 uint32_t readCFemtof()
 {
