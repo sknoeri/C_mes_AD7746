@@ -11,7 +11,7 @@ import multiprocessing
 import time
 
 import numpy as np
-Ts = 0.05
+Ts = 0.011
 widowSize = 200
 # initalize the serial port
 serialInst = serial.Serial()
