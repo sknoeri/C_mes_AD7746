@@ -16,7 +16,13 @@ import numpy as np
 #         bites = serInst.readline()  # reads recived bytes
 #         packet = str(bites.decode('utf')).replace('\r\n', '',1)  # decodes recived bytes and removes \n\r from the reading
 #         print(packet)
-
-print(len(np.arange(0,50,1)))
-print(len(np.zeros(50)))
-print(len(np.zeros(50)))
+#
+# a = 'A1312.12'
+# float_or_not = a[1:].replace('.', '', 1).isdigit()
+# print(a[0])
+# print(a.replace('.', '', 1).replace('A','',1))
+Ts=0.022
+widowSize =2000
+t_plotb = np.arange(0, widowSize * Ts, Ts)
+print(len(t_plotb))
+print(t_plotb[1999])

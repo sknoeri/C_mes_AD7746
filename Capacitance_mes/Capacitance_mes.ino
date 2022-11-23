@@ -16,7 +16,7 @@ void setup() {
   Wire.write(0xC0);   // gives instructions to the device at adress 0x07 single conversion enabled
   Wire.write(0x00);   // gives instructions to the device at adress 0x08 voltage and temp sensordisconected
   Wire.write(0x2B);   // gives instructions to the device at adress 0x09 EXCA and EXCB pin configured
-  Wire.write(0x11);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading
+  Wire.write(0x01);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading
   Wire.write(0xFF);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
                       // this shit must be calibrated they have +-20% error on the device 9D 9E for channel A
   Wire.write(0x80);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
@@ -29,14 +29,15 @@ void setup() {
 
 void loop()
 {
-  readChanAorB('A');
-  delay(100);
-  capa=readCFemtof();
-  Serial.println(capa);
-  //readChanAorB('B');
-  //delay(10);
-  //capa=readCFemtof();
-  //Serial.println(capa);
+  
+  capa=readChanAorB('A');
+  delay(1000);
+  Serial.print('A');Serial.println(capa);
+  
+  capa=readChanAorB('B');
+  delay(130);
+  Serial.print('B');Serial.println(capa);
+
   
 }
 
@@ -44,9 +45,9 @@ void loop()
 uint32_t readCFemtof()
 {
   unsigned char buffer[4];
-  Wire.beginTransmission(I2C_adress);
-  Wire.write(0x00);  // register to read
-  Wire.endTransmission();
+  //Wire.beginTransmission(I2C_adress);
+  //Wire.write(0x00);  // register to read
+  //Wire.endTransmission();
   //Serial.println("Set pointer to 0x1");
   Wire.requestFrom(I2C_adress, 4); // read a byte
   char i = 0;
@@ -67,7 +68,7 @@ uint32_t readCFemtof()
   return 8192*(double)C/16777215; // 8192*C/(2^24-1) ensures value between 0 and 8.192pf. Is the capacitance in femto farad.
 }
 
-void readChanAorB(char chanel)
+uint32_t readChanAorB(char chanel)
 {
   if(chanel=='A'){
     Wire.beginTransmission(I2C_adress); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B100 1000
@@ -79,12 +80,40 @@ void readChanAorB(char chanel)
     //Wire.write(0xFF);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
     //Wire.write(0x00);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
     Wire.endTransmission();
+    delay(15);
+    unsigned char buffer[4];
+    Wire.requestFrom(I2C_adress, 4); // read a byte
+    char i = 0;
+    while (i<4) {
+      while(!Wire.available()) {
+        // waiting
+      }
+      buffer[i] = Wire.read();
+      i++;
+    }
+    uint32_t C=0;
+    C = ((uint32_t)buffer[1]<<16)|((uint32_t)buffer[2]<<8)|((uint32_t)buffer[3]); // No fixpoint aritmeritc is done yet
+    return 8192*(double)C/16777215; // 8192*C/(2^24-1) ensures value between 0 and 8.192pf. Is the capacitance in femto farad.
   }
   else if(chanel=='B'){
     Wire.beginTransmission(I2C_adress); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B100 1000
     Wire.write(0x07);   // sets register pointer to the given adress 0x07 Cap setup register bit 6 chooses Chaenl A or B
     Wire.write(0xC0);   // gives instructions to the device at adress 0x07 single conversion enabled sets multiplexer to B
     Wire.endTransmission();
+    delay(15);
+    unsigned char buffer[4];
+    Wire.requestFrom(I2C_adress, 4); // read a byte
+    char i = 0;
+    while (i<4) {
+      while(!Wire.available()) {
+        // waiting
+      }
+      buffer[i] = Wire.read();
+      i++;
+    }
+    uint32_t C=0;
+    C = ((uint32_t)buffer[1]<<16)|((uint32_t)buffer[2]<<8)|((uint32_t)buffer[3]); // No fixpoint aritmeritc is done yet
+    return 8192*(double)C/16777215; // 8192*C/(2^24-1) ensures value between 0 and 8.192pf. Is the capacitance in femto farad.
   }
 }
 
