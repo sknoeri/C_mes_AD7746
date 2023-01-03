@@ -55,13 +55,20 @@ void loop()
     cnt1=0;
     digitalWrite(12,0);
     Serial.print('A');Serial.println(capa1);
+    
+    
   }
   if(cnt0==1){
     chanSelect(0);
     capa0=readCFemtof();
     cnt0=0;
     digitalWrite(13,0);
-    Serial.print('B');Serial.println(capa0);    
+    Serial.print('B');Serial.println(capa0);
+    int VoltValue=analogRead(A0);
+    float V=VoltValue*(5.0/1023.0);
+    Serial.print('V');Serial.println(V);
+    
+    
   }
   
   /*delay(100);

@@ -88,7 +88,7 @@ uint32_t readCFemtof()
   unsigned char buffer[4];
   Wire.beginTransmission(I2C_adress);
   Wire.write(0x00);  // register to read
-  Wire.endTransmission();
+  Wire.endTransmission(false);
   //Serial.println("Set pointer to 0x1");
   Wire.requestFrom(I2C_adress, 4); // read a byte
   char i = 0;
@@ -120,13 +120,13 @@ void readChanAorB(char chanel)
     //Wire.write(0x11);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading
     //Wire.write(0xFF);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
     //Wire.write(0x00);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
-    Wire.endTransmission();
+    Wire.endTransmission(false);
   }
   else if(chanel=='B'){
     Wire.beginTransmission(I2C_adress); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B100 1000
     Wire.write(0x07);   // sets register pointer to the given adress 0x07 Cap setup register bit 6 chooses Chaenl A or B
     Wire.write(0xC0);   // gives instructions to the device at adress 0x07 single conversion enabled sets multiplexer to B
-    Wire.endTransmission();
+    Wire.endTransmission(false);
   }
 }
 
