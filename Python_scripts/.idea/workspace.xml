@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e6d02b3-8290-4160-8d42-077a0799a631" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/redMesures_ChnelAandBandV.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Capa_extended_I2Cmultiplex/Capa_extended_I2Cmultiplex.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../Capa_extended_I2Cmultiplex/Capa_extended_I2Cmultiplex.ino" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Capacitance_mes_ext_mod/Capacitance_mes_ext_mod.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../Capacitance_mes_ext_mod/Capacitance_mes_ext_mod.ino" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Measurments_capa.py" beforeDir="false" afterPath="$PROJECT_DIR$/Measurments_capa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redMesures_ChnelAandBandV.py" beforeDir="false" afterPath="$PROJECT_DIR$/redMesures_ChnelAandBandV.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,15 +29,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/simon/Documents/Simels_daten/Epfl/sem_13_2022_Master_theis_USA/Master_thesis/Capacitance_measuring/C_mes_AD7746/Python_scripts",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/simon/Documents/Simels_daten/Epfl/sem_13_2022_Master_theis_USA/Master_thesis/Capacitance_measuring/C_mes_AD7746/Python_scripts&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\C_mes_AD7746\Python_scripts" />

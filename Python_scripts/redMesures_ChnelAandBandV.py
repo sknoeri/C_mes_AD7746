@@ -195,7 +195,9 @@ def save_data(): # stp button is applyed the fucktion saves data to measurment f
             name = 'NoName'
         else:
             name = fileName.get()
-        data = pd.DataFrame({'timeA': t_valA, 'A chanel': valuesA, 'timeB': t_valB, 'B channel': valuesB, 'timeB': t_valV, 'B channel': valuesV})
+        d = {'timeA': t_valA, 'A chanel': valuesA, 'timeB': t_valB, 'B channel': valuesB, 'timeV': t_valV,
+             'Volts': valuesV}
+        data = pd.DataFrame({k: pd.Series(v) for k, v in d.items()})
         data.to_excel(Path+'/' + name +'.xlsx')
         Output.insert("1.0","Register measurements to: \n"+Path+'/' + name +'.xlsx \n') # puts string a beginning of text field
     else:
