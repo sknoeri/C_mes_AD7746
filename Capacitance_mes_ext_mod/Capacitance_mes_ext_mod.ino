@@ -2,11 +2,8 @@
 
 // Defnitions of AD7746
 #define I2C_adress 0x48
-double capaA=0;
-double capaB=0;
+double capa=0;
 volatile int cnt=0;
-volatile int cntA=0;
-volatile int cntB=0;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -15,13 +12,14 @@ void setup() {
   Serial.println("Serial initalized");
   delay(100);
   Wire.begin();
+  delay(100);
   Wire.beginTransmission(I2C_adress); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B100 1000
   Wire.write(0x07);   // sets register pointer to the given adress 0x07
   Wire.write(0xC0);   // gives instructions to the device at adress 0x07 single conversion enabled
   Wire.write(0x00);   // gives instructions to the device at adress 0x08 voltage and temp sensordisconected
   Wire.write(0x1B);   // gives instructions to the device at adress 0x09 EXCA and EXCB pin configured EXCA enable EXCB inverted enabled
-  Wire.write(0x01);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading  39
-  Wire.write(0x99);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
+  Wire.write(0x01);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading
+  Wire.write(0x9F);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
                       // this shit must be calibrated they have +-20% error on the device 9D 9E for channel A
   Wire.write(0x80);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
   // Atention if second  last comand is 0x00 then it doesnt work if 0xFF then we can measure full range on cahnel B for channel A this doesnt matter
@@ -30,56 +28,24 @@ void setup() {
   Wire.endTransmission();
   delay(100);
   Serial.println("transmitted data");
-  delay(100);
   attachInterrupt(1,reading,FALLING);
-  pinMode(13,1);
 }
 
 
 void loop()
 {
-  if(cntA==1){
-    readChanAorB('B');
-    capaA=readCFemtof();
-    cntA=0;
-    digitalWrite(13,0);
-    Serial.print('A');Serial.println(capaA);
-    
-    
-  }
-  if(cntB==1){
+  if(cnt==1){
+    //delay(1);
     readChanAorB('A');
-    capaB=readCFemtof();
-    cntB=0;
-    digitalWrite(13,0);
-    Serial.print('B');Serial.println(capaB);
-    
-    
-    
+    capa=readCFemtof();
+    cnt=0;
+    Serial.println(capa);
   }
-  
-  /*delay(100);
-  readChanAorB('A');
-  capa=readCFemtof();
-  Serial.print('A');Serial.println(capa);
-  delay(1);
-  readChanAorB('B');
-  capa=readCFemtof();
-  Serial.print('B');Serial.println(capa);*/
   
 }
 
 void reading(){
-  if(cnt==0 && cntB==0){
-    cntA=1;
     cnt=1;
-    digitalWrite(13,1);
-  }
-  if(cnt==1 && cntA==0){
-    cntB=1;
-    cnt=0;
-    digitalWrite(13,1);
-  }
 }
 
 
@@ -88,7 +54,7 @@ uint32_t readCFemtof()
   unsigned char buffer[4];
   Wire.beginTransmission(I2C_adress);
   Wire.write(0x00);  // register to read
-  Wire.endTransmission(false);
+  Wire.endTransmission();
   //Serial.println("Set pointer to 0x1");
   Wire.requestFrom(I2C_adress, 4); // read a byte
   char i = 0;
@@ -106,7 +72,9 @@ uint32_t readCFemtof()
   Serial.print("Buffer 2: ");Serial.println(buffer[2]);
   Serial.print("Buffer 3: ");Serial.println(buffer[3]);
   Serial.println(C);*/
-  return 99200*(double)C/16777215; // 8192*C/(2^24-1) ensures value between 0 and 8.192pf. Is the capacitance in femto farad.
+  //return 99200*(double)C/16777215; // 8192*C/(2^24-1) ensures value between 0 and 8.192pf. Is the capacitance in femto farad.
+  return 8192*(double)C/16777215; // 8192*C/(2^24-1) ensures value between 0 and 8.192pf. Is the capacitance in femto farad.
+
 }
 
 void readChanAorB(char chanel)
@@ -120,13 +88,13 @@ void readChanAorB(char chanel)
     //Wire.write(0x11);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading
     //Wire.write(0xFF);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
     //Wire.write(0x00);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
-    Wire.endTransmission(false);
+    Wire.endTransmission();
   }
   else if(chanel=='B'){
     Wire.beginTransmission(I2C_adress); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B100 1000
     Wire.write(0x07);   // sets register pointer to the given adress 0x07 Cap setup register bit 6 chooses Chaenl A or B
     Wire.write(0xC0);   // gives instructions to the device at adress 0x07 single conversion enabled sets multiplexer to B
-    Wire.endTransmission(false);
+    Wire.endTransmission();
   }
 }
 

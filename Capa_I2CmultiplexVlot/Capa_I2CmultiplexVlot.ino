@@ -16,34 +16,49 @@ void setup() {
   delay(100);
   Wire.begin();
   delay(100);
-  
-  
-  for(uint8_t i=0; i<2; i++){
-    chanSelect(i);
-    delay(5);
-    Wire.beginTransmission(I2C_adress); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B100 1000
-    Wire.write(0x07);   // sets register pointer to the given adress 0x07
-    Wire.write(0x80);   // gives instructions to the device at adress 0x07 single conversion enabled
-    Wire.write(0x00);   // gives instructions to the device at adress 0x08 voltage and temp sensordisconected
-    Wire.write(0x1B);   // gives instructions to the device at adress 0x09 EXCA and EXCB pin configured EXCA enable EXCB inverted enabled
-    Wire.write(0x01);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading  39
-    Wire.write(0x99);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
-                        // this shit must be calibrated they have +-20% error on the device 9D 9E for channel A
-    Wire.write(0x80);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
-                        // Atention if second  last comand is 0x00 then it doesnt work if 0xFF then we can measure full range on cahnel B for channel A this doesnt matter
-    Wire.write(0xF4);   // gives instructions to the device at adress 0x0D Offset calibration high bite
-    Wire.write(0x88);   // gives instructions to the device at adress 0x0E Offset calibration low bite
-    Wire.endTransmission();
-    delay(10);
-  }
-  
+  /////////////////////////////////////////
+  ////// Configure the first CDC //////////
+  /////////////////////////////////////////
+  chanSelect(1);
+  delay(10);
+  Wire.beginTransmission(I2C_adress); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B100 1000
+  Wire.write(0x07);   // sets register pointer to the given adress 0x07
+  Wire.write(0x80);   // gives instructions to the device at adress 0x07 single conversion enabled
+  Wire.write(0x00);   // gives instructions to the device at adress 0x08 voltage and temp sensordisconected
+  Wire.write(0x0B);   // gives instructions to the device at adress 0x09 EXCA and EXCB pin configured EXCA enable EXCB inverted enabled
+  Wire.write(0x01);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading  39
+  Wire.write(0x98);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
+                      // this shit must be calibrated they have +-20% error on the device 9D 9E for channel A
+  Wire.write(0x80);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
+                      // Atention if second  last comand is 0x00 then it doesnt work if 0xFF then we can measure full range on cahnel B for channel A this doesnt matter
+  Wire.write(0xF4);   // gives instructions to the device at adress 0x0D Offset calibration high bite
+  Wire.write(0x88);   // gives instructions to the device at adress 0x0E Offset calibration low bite
+  Wire.endTransmission();
+  delay(100);
+  /////////////////////////////////////////
+  ////// Configure the second CDC //////////
+  /////////////////////////////////////////
+  chanSelect(0);
+  delay(10);
+  Wire.beginTransmission(I2C_adress); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B100 1000
+  Wire.write(0x07);   // sets register pointer to the given adress 0x07
+  Wire.write(0x80);   // gives instructions to the device at adress 0x07 single conversion enabled
+  Wire.write(0x00);   // gives instructions to the device at adress 0x08 voltage and temp sensordisconected
+  Wire.write(0x0B);   // gives instructions to the device at adress 0x09 EXCA and EXCB pin configured EXCA enable EXCB inverted enabled
+  Wire.write(0x01);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading  39
+  Wire.write(0x98);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
+                      // this shit must be calibrated they have +-20% error on the device 9D 9E for channel A
+  Wire.write(0x80);   // gives instructions to the device at adress 0x0C connects capacitive DAC to the positive capa input and allows the full range on chanel B (0-8pf)
+                      // Atention if second  last comand is 0x00 then it doesnt work if 0xFF then we can measure full range on cahnel B for channel A this doesnt matter
+  Wire.write(0xFC);   // gives instructions to the device at adress 0x0D Offset calibration high bite
+  Wire.write(0x98);   // gives instructions to the device at adress 0x0E Offset calibration low bite
+  Wire.endTransmission(); 
   delay(100);
   Serial.println("transmitted data");
   delay(100);
+  //Configure the Interrupts for the CDC readings
   attachInterrupt(1,reading1,FALLING);
   attachInterrupt(0,reading0,FALLING);
-  pinMode(13,1);
-  pinMode(12,1);
 }
 
 
@@ -53,8 +68,8 @@ void loop()
     chanSelect(1);
     capa1=readCFemtof();
     cnt1=0;
-    digitalWrite(12,0);
     Serial.print('A');Serial.println(capa1);
+    //Serial.print('B');Serial.println(capa0);
     
     
   }
@@ -62,12 +77,11 @@ void loop()
     chanSelect(0);
     capa0=readCFemtof();
     cnt0=0;
-    digitalWrite(13,0);
+    //digitalWrite(13,0);
     Serial.print('B');Serial.println(capa0);
-    int VoltValue=analogRead(A0);
-    float V=VoltValue*(5.0/1023.0);
-    Serial.print('V');Serial.println(V);
-    
+    //int VoltValue=analogRead(A0);
+    //float V=VoltValue*(5.0/1023.0);
+    //Serial.print('V');Serial.println(V);
     
   }
   
@@ -91,12 +105,12 @@ void chanSelect(uint8_t i){
 
 void reading1(){
   cnt1=1;
-  digitalWrite(12,1);
+  //digitalWrite(12,1);
 }
 
 void reading0(){
   cnt0=1;
-  digitalWrite(13,1);
+  //digitalWrite(13,1);
 }
 
 
@@ -119,7 +133,7 @@ uint32_t readCFemtof()
   uint32_t C=0;
   C = ((uint32_t)buffer[1]<<16)|((uint32_t)buffer[2]<<8)|((uint32_t)buffer[3]); // No fixpoint aritmeritc is done yet
 
-  return 99200*(double)C/16777215; // 8192*C/(2^24-1) ensures value between 0 and 8.192pf. Is the capacitance in femto farad.
+  return 8192*(double)C/16777215; // 99200*C/(2^24-1) ensures value between 0 and 8.192pf. Is the capacitance in femto farad.
 }
 
 void readChanAorB(char chanel)
