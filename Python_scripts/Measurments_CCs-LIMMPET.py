@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\Measurments_excel\Measures_CCS-LIMMPET'
-meas=pd.read_excel(open(path+'/css_limmpet10_5_noextended.xlsx', 'rb'))
+meas=pd.read_excel(open(path+'/CCs_LIMMPET1um_try_1_3_1.5baddrplets.xlsx', 'rb'))
 timeA = meas['timeA'].to_numpy()
 timeB = meas['timeB'].to_numpy()
 timeV = meas['timeV'].to_numpy()
@@ -15,10 +15,10 @@ Volts = meas['Volts'].to_numpy()
 ## making the plots of the measurements
 plt.figure()
 
-plt.plot(timeA, capaA, 'b', label='Chanel A C[fF]')
-plt.plot(timeB, capaB, 'r', label='Chanel B C[fF]')
+plt.plot(timeA, capaA, 'b', label='Sense A C[fF]')
+plt.plot(timeB, capaB, 'r', label='Sense B C[fF]')
 plt.plot(timeV, Volts, 'g', label='Volts [mV]')
-plt.ylabel('C [fF]/[mV]')
+plt.ylabel('C [fF]')
 plt.xlabel('t [s]')
 plt.legend()
 plt.grid()

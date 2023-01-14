@@ -35,7 +35,7 @@ void setup() {
     Wire.write(0x88);   // gives instructions to the device at adress 0x0E Offset calibration low bite
     Wire.endTransmission();
     delay(10);
-  }
+  }31.2
   
   delay(100);
   Serial.println("transmitted data");

@@ -15,9 +15,9 @@ void setup() {
   delay(100);
   Wire.beginTransmission(I2C_adress); // The adress for writing is 0x90 but in the wire library the write bit is automatically wiriteen so : 0x48 B100 1000
   Wire.write(0x07);   // sets register pointer to the given adress 0x07
-  Wire.write(0xC0);   // gives instructions to the device at adress 0x07 single conversion enabled
+  Wire.write(0x80);   // gives instructions to the device at adress 0x07 single conversion enabled
   Wire.write(0x00);   // gives instructions to the device at adress 0x08 voltage and temp sensordisconected
-  Wire.write(0x1B);   // gives instructions to the device at adress 0x09 EXCA and EXCB pin configured EXCA enable EXCB inverted enabled
+  Wire.write(0x0B);   // gives instructions to the device at adress 0x09 EXCA and EXCB pin configured EXCA enable EXCB inverted enabled
   Wire.write(0x01);   // gives instructions to the device at adress 0x0A cnersion time 20 ms 50Hz, contineous conversion mode -> important for the reading
   Wire.write(0x9F);   // gives instructions to the device at adress 0x0B connects capacitive DAC to the positive capa input and allows the full range on chanel A (0-8pf)
                       // this shit must be calibrated they have +-20% error on the device 9D 9E for channel A

@@ -13,16 +13,18 @@ import time
 import numpy as np
 Ts = 0.011
 widowSize = 200
+volt = 0
 # initalize the serial port
 serialInst = serial.Serial()
 # registered variables
-pressure = []
+cpacity = []
 t_val = []
+volts = []
 # conditions to start plotting or to stop it and to register measurements
 recordStop = True
 onOffPlot = False
 comOpen = False
-Path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\C_mes_AD7746'
+Path = '/Users\penna\Desktop\simon\C_mes_AD7746-main'
 
 # function that plots the Serial data from the arduino
 def plotFunc(t,data):
@@ -43,15 +45,18 @@ def record_data(): # starts measurements when the start btton is applied
     t = 0
     global recordStop
     global t_val
-    global pressure
+    global cpacity
+    global volts
+    global volt
     global comOpen
     global widowSize
     if(recordStop == True and comOpen != False):# Starts record when COM is open and recod is enabled by GUI
-        recordStop =False
+        recordStop = False
         plt.close()
         record.config(image=on) # shows the ON button
         Output.insert("1.0","Start measurements \n") # puts string a beginning of text field
-        pressure = []
+        cpacity = []
+        volts = []
         t_val = []
         ##t_plot = np.arange(0,widowSize*Ts,Ts)
         #p_plot = np.zeros(widowSize)
@@ -89,24 +94,29 @@ def record_data(): # starts measurements when the start btton is applied
             #########
             float_or_not = packet.replace('.', '', 1).isdigit() # checks if number is convertible to float
             if float_or_not == False: # if not float append 0 to data vector
-                pressure.append(0)
+                cpacity.append(0)
                 t_val.append(t)
                 Output.insert("1.0","Reciced data: "+packet +'\n') # puts string a beginning of text field
             else: # append data vector
-                pressure.append(float(packet))
+                cpacity.append(float(packet))
                 t_val.append(t)
+            volts.append(volt)
             if onOffPlot == True: ## hadels the start and stop of the data plot
                 a = len(t_val)
                 if(a>widowSize):
                     t_plot = t_val[a-widowSize:a]
-                    p_plot = pressure[a-widowSize:a]
+                    c_plot = cpacity[a - widowSize:a]
+                    v_plot = volts[a - widowSize:a]
                 else:
-                    p_plot = np.zeros(widowSize)
-                    p_plot[widowSize-len(pressure):widowSize] = pressure
-                    p_plot[0:widowSize-len(pressure)] = np.zeros(widowSize-len(pressure))
+                    c_plot = np.zeros(widowSize)
+                    c_plot[widowSize-len(cpacity):widowSize] = cpacity
+                    c_plot[0:widowSize-len(cpacity)] = np.zeros(widowSize - len(cpacity))
+                    v_plot = np.zeros(widowSize)
+                    v_plot[widowSize - len(volts):widowSize] = volts
+                    v_plot[0:widowSize - len(volts)] = np.zeros(widowSize - len(volts))
                     t_plot = np.arange(0,(widowSize-0.5)*Ts,Ts)
                 if cnt>1000:
-                    plotFunc(t_plot, p_plot)  # actualize the plot after every reading
+                    plotFunc(t_plot, c_plot)  # actualize the plot after every reading
                     cnt=0
             else:
                 if cnt2 > 1000:
@@ -135,7 +145,7 @@ def save_data(): # stp button is applyed the fucktion saves data to measurment f
             name = 'NoName'
         else:
             name = fileName.get()
-        data = pd.DataFrame({'time': t_val, 'pressure': pressure})
+        data = pd.DataFrame({'t': t_val, 'C': cpacity, 'V': volts})
         try:
             data.to_excel(Path+'/' + name +'.xlsx')
             Output.insert("1.0",
@@ -146,6 +156,15 @@ def save_data(): # stp button is applyed the fucktion saves data to measurment f
                           "Register measurements to: \n" + Path + '/' + name + '.csv \n')  # puts string a beginning of text field
     else:
         Output.insert("1.0","Emty file \n") # puts string a beginning of text field
+
+def apply_V():
+    global volt
+    v = appVolt.get()
+    try:
+       if(v.replace('.', '', 1).isdigit()==True):
+           volt=v
+    except:
+        volt=0
 
 # fuction that searches if and where a Arduino is connected
 def serialPortArduino(): # Searches if Arduino Uno is connecto or not
@@ -244,12 +263,23 @@ if __name__ == '__main__':
     # tell ui the name of the saved file
     root.update()
     fileName = tk.Entry(root, width=20, borderwidth=2, font=("Helvetica", 15))
-    fileName.place(x=save.winfo_x() + save.winfo_width() + 20, y=save.winfo_y()+5 )
+    fileName.place(x=save.winfo_x() + save.winfo_width() + 20, y=save.winfo_y() + 5)
+    root.update()
+
+    # Apply volt button data button
+    root.update()
+    apply = tk.Button(root, text="Apply", font=('calbiri', 15), command=lambda: apply_V())
+    apply.place(x=10, y=save.winfo_y() + 50)
+
+    # Aplied voltage to droptles on CCS device
+    root.update()
+    appVolt = tk.Entry(root, width=20, borderwidth=2, font=("Helvetica", 15))
+    appVolt.place(x=apply.winfo_x() + apply.winfo_width() + 20, y=apply.winfo_y() + 5)
     root.update()
 
     #------ puttig the text log field ----
     Output = tk.Text(root, height=20,width=35,bg="light cyan",font=("Helvetica", 15))
-    Output.place(x=10, y=fileName.winfo_y() + fileName.winfo_height() + 10)
+    Output.place(x=10, y=appVolt.winfo_y() + appVolt.winfo_height() + 10)
     root.update()
 
     #------The figure on the user interface window------#
@@ -262,7 +292,7 @@ if __name__ == '__main__':
     # creating the Tkinter canvas
     # containing the Matplotlib figure
     canvas = FigureCanvasTkAgg(fig,master=root)
-    canvas.get_tk_widget().place(x=baudText.winfo_x()+baudText.winfo_width()+20 , y=startSerial.winfo_y()) # placing the canvas on the Tkinter window
+    canvas.get_tk_widget().place(x=baudText.winfo_x()+baudText.winfo_width()+50 , y=startSerial.winfo_y()) # placing the canvas on the Tkinter window
     canvas.draw()
     toolbar = NavigationToolbar2Tk(canvas,root)
     toolbar.update()

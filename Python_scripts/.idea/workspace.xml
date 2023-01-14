@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e6d02b3-8290-4160-8d42-077a0799a631" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Measurments_CCs-LIMMPET.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/redMesuresAppV.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Capa_I2CmultiplexVlot/Capa_I2CmultiplexVlot.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../Capa_I2CmultiplexVlot/Capa_I2CmultiplexVlot.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Capa_extended_I2CmultiplexVlot/Capa_extended_I2CmultiplexVlot.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../Capa_extended_I2CmultiplexVlot/Capa_extended_I2CmultiplexVlot.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Capacitance_mes_ext_mod/Capacitance_mes_ext_mod.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../Capacitance_mes_ext_mod/Capacitance_mes_ext_mod.ino" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Measurments_CCs-LIMMPET.py" beforeDir="false" afterPath="$PROJECT_DIR$/Measurments_CCs-LIMMPET.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Measurments_capa.py" beforeDir="false" afterPath="$PROJECT_DIR$/Measurments_capa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redMesures.py" beforeDir="false" afterPath="$PROJECT_DIR$/redMesures.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +50,7 @@
       <recent name="C:\Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Python_scripts" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.redMesures_ChnelAandB (1)">
+  <component name="RunManager" selected="Python.Measurments_capa">
     <configuration name="Measurments_CCs-LIMMPET" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Python_scripts" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -203,10 +208,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.redMesures_ChnelAandB (1)" />
+        <item itemvalue="Python.Measurments_capa" />
         <item itemvalue="Python.redMesures" />
         <item itemvalue="Python.Measurments_CCs-LIMMPET" />
-        <item itemvalue="Python.Measurments_capa" />
+        <item itemvalue="Python.redMesures_ChnelAandB (1)" />
         <item itemvalue="Python.redMesures_ChnelAandB" />
       </list>
     </recent_temporary>
