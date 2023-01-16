@@ -22,7 +22,5 @@ import numpy as np
 # print(a[0])
 # print(a.replace('.', '', 1).replace('A','',1))
 Ts=0.022
-widowSize =2000
-t_plotb = np.arange(0, widowSize * Ts, Ts)
-print(len(t_plotb))
-print(t_plotb[1999])
+widowSize = [1,2,3,4]
+print(type(widowSize))

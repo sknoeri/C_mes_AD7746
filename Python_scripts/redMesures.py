@@ -16,7 +16,7 @@ widowSize = 200
 # initalize the serial port
 serialInst = serial.Serial()
 # registered variables
-pressure = []
+cpacity = []
 t_val = []
 # conditions to start plotting or to stop it and to register measurements
 recordStop = True
@@ -26,6 +26,13 @@ Path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Ma
 
 # function that plots the Serial data from the arduino
 def plotFunc(t,data):
+    """
+    Args:Makes the plot of the figure defined by (t,data) on the tkinter GUI
+        t: time list
+        data: capacitance list, voltages measurements or inputs
+
+    Returns: None plots a figure
+    """
     plot1.clear()
     plot1.set_title('Serial Data')
     plot1.set_xlabel('t')
@@ -34,16 +41,20 @@ def plotFunc(t,data):
     plot1.legend()
     plot1.grid()
     canvas.draw()
-    # creating the Matplotlib toolbar
-    root.update()
-
+    root.update()     # creating the Matplotlib toolbar
+    return None
 
 # Fuction triggered by GUI
 def record_data(): # starts measurements when the start btton is applied
+    """
+    Reads and records the data of recived by the serial port. Is triggered by a button of the GUI
+    that changes the global recordStop to True or False.
+    Returns: recordStop bol, cpacity list, t_val list
+    """
     t = 0
     global recordStop
     global t_val
-    global pressure
+    global cpacity
     global comOpen
     global widowSize
     if(recordStop == True and comOpen != False):# Starts record when COM is open and recod is enabled by GUI
@@ -51,10 +62,10 @@ def record_data(): # starts measurements when the start btton is applied
         plt.close()
         record.config(image=on) # shows the ON button
         Output.insert("1.0","Start measurements \n") # puts string a beginning of text field
-        pressure = []
+        cpacity = []
         t_val = []
         ##t_plot = np.arange(0,widowSize*Ts,Ts)
-        #p_plot = np.zeros(widowSize)
+        #c_plot = np.zeros(widowSize)
     else:
         recordStop = True
         record.config(image=off) # shows the off button
@@ -89,32 +100,39 @@ def record_data(): # starts measurements when the start btton is applied
             #########
             float_or_not = packet.replace('.', '', 1).isdigit() # checks if number is convertible to float
             if float_or_not == False: # if not float append 0 to data vector
-                pressure.append(0)
+                cpacity.append(0)
                 t_val.append(t)
                 Output.insert("1.0","Reciced data: "+packet +'\n') # puts string a beginning of text field
             else: # append data vector
-                pressure.append(float(packet))
+                cpacity.append(float(packet))
                 t_val.append(t)
             if onOffPlot == True: ## hadels the start and stop of the data plot
                 a = len(t_val)
                 if(a>widowSize):
                     t_plot = t_val[a-widowSize:a]
-                    p_plot = pressure[a-widowSize:a]
+                    c_plot = cpacity[a - widowSize:a]
                 else:
-                    p_plot = np.zeros(widowSize)
-                    p_plot[widowSize-len(pressure):widowSize] = pressure
-                    p_plot[0:widowSize-len(pressure)] = np.zeros(widowSize-len(pressure))
+                    c_plot = np.zeros(widowSize)
+                    c_plot[widowSize-len(cpacity):widowSize] = cpacity
+                    c_plot[0:widowSize-len(cpacity)] = np.zeros(widowSize - len(cpacity))
                     t_plot = np.arange(0,(widowSize-0.5)*Ts,Ts)
                 if cnt>1000:
-                    plotFunc(t_plot, p_plot)  # actualize the plot after every reading
+                    plotFunc(t_plot, c_plot)  # actualize the plot after every reading
                     cnt=0
             else:
                 if cnt2 > 1000:
                     #plt.clf()
                     root.update()
                     cnt2=0
+    return recordStop, t_val, cpacity
 # Turns on/off the plot
 def OnOff_plot():
+    """
+    Is triggerd by button on GUI
+    Gets the size of plotted data entered into the GUI and updates it into windowSize.
+    Starts the live plot or truns it off.
+    Returns: onOffPlot bol, widowSize int
+    """
     global onOffPlot
     global widowSize
     if onOffPlot== False:
@@ -128,14 +146,19 @@ def OnOff_plot():
     else:
         plotOnOff.config(image=off) # shows the off button
         onOffPlot = False
+    return onOffPlot, widowSize
 
 def save_data(): # stp button is applyed the fucktion saves data to measurment file
+    """
+    Is triggrd by button on GUI. Saves data descibed path in code.
+    Returns: None
+    """
     if (len(t_val)>0):
         if(fileName.get()== ''):
             name = 'NoName'
         else:
             name = fileName.get()
-        data = pd.DataFrame({'time': t_val, 'pressure': pressure})
+        data = pd.DataFrame({'time': t_val, 'pressure': cpacity})
         try:
             data.to_excel(Path+'/' + name +'.xlsx')
             Output.insert("1.0",
@@ -146,12 +169,13 @@ def save_data(): # stp button is applyed the fucktion saves data to measurment f
                           "Register measurements to: \n" + Path + '/' + name + '.csv \n')  # puts string a beginning of text field
     else:
         Output.insert("1.0","Emty file \n") # puts string a beginning of text field
+    return None
 
 # fuction that searches if and where a Arduino is connected
 def serialPortArduino(): # Searches if Arduino Uno is connecto or not
     """
     Function loops trough serial ports and checks if Arduino uno is connected or not
-    Returns: portVar, returns Fals if Arduion Uno is not connect, if connectd returns the port name
+    Returns: portVar bol, returns Fals if Arduion Uno is not connect, if connectd returns the port name
     """
     ports = serial.tools.list_ports.comports() #all the aviable ports
     portVar = False
@@ -170,6 +194,11 @@ def serialPortArduino(): # Searches if Arduino Uno is connecto or not
     return portVar # false or portname
 ########### Initialise the Serial port if Arduino is connected
 def comActive():
+    """
+    Is triggerd by button on GUI. Sets the baudrate enterd in the GUI
+    to the serial port where the Arduino is connected.
+    Returns: comOpen bol
+    """
     global comOpen
     portVar = serialPortArduino()
     if(portVar == False or comOpen==True):
@@ -189,7 +218,7 @@ def comActive():
             comOpen = True
         except:
             Output.insert("1.0", "Baudrate is not correct" + baudText.get() + "\n")  # puts string a beginning of text field("")
-
+    return comOpen
 
 if __name__ == '__main__':
     #------ Creat buttons of little user interface to control the plot starts etc

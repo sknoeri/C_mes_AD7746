@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 import tkinter as tk #tkinter for GUI
 import pandas as pd # for writing into a .xml file
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,NavigationToolbar2Tk)
+import numpy as np
 import multiprocessing
 import time
 
-import numpy as np
 Ts = 0.011
 widowSize = 200
 volt = 0
@@ -28,6 +28,13 @@ Path = '/Users\penna\Desktop\simon\C_mes_AD7746-main'
 
 # function that plots the Serial data from the arduino
 def plotFunc(t,data):
+    """
+    Args:Makes the plot of the figure defined by (t,data) on the tkinter GUI
+        t: time list
+        data: capacitance list, voltages measurements or inputs
+
+    Returns: None plots a figure
+    """
     plot1.clear()
     plot1.set_title('Serial Data')
     plot1.set_xlabel('t')
@@ -38,10 +45,15 @@ def plotFunc(t,data):
     canvas.draw()
     # creating the Matplotlib toolbar
     root.update()
-
+    return None
 
 # Fuction triggered by GUI
 def record_data(): # starts measurements when the start btton is applied
+    """
+    Reads and records the data of recived by the serial port. Is triggered by a button of the GUI
+    that changes the global recordStop to True or False.
+    Returns: recordStop bol, cpacity list, t_val list
+    """
     t = 0
     global recordStop
     global t_val
@@ -123,8 +135,15 @@ def record_data(): # starts measurements when the start btton is applied
                     #plt.clf()
                     root.update()
                     cnt2=0
+    return recordStop, t_val, cpacity
 # Turns on/off the plot
 def OnOff_plot():
+    """
+    Is triggerd by button on GUI
+    Gets the size of plotted data entered into the GUI and updates it into windowSize.
+    Starts the live plot or truns it off.
+    Returns: onOffPlot bol, widowSize int
+    """
     global onOffPlot
     global widowSize
     if onOffPlot== False:
@@ -138,8 +157,12 @@ def OnOff_plot():
     else:
         plotOnOff.config(image=off) # shows the off button
         onOffPlot = False
-
+    return onOffPlot, widowSize
 def save_data(): # stp button is applyed the fucktion saves data to measurment file
+    """
+    Is triggrd by button on GUI. Saves data descibed path in code.
+    Returns: None
+    """
     if (len(t_val)>0):
         if(fileName.get()== ''):
             name = 'NoName'
@@ -156,8 +179,12 @@ def save_data(): # stp button is applyed the fucktion saves data to measurment f
                           "Register measurements to: \n" + Path + '/' + name + '.csv \n')  # puts string a beginning of text field
     else:
         Output.insert("1.0","Emty file \n") # puts string a beginning of text field
-
+    return None
 def apply_V():
+    """
+    Triggerd by the GUI. Puts the applied voltage to list which is stored with cpavalues.
+    Returns: volt float
+    """
     global volt
     v = appVolt.get()
     try:
@@ -165,6 +192,7 @@ def apply_V():
            volt=v
     except:
         volt=0
+    return volt
 
 # fuction that searches if and where a Arduino is connected
 def serialPortArduino(): # Searches if Arduino Uno is connecto or not
@@ -189,6 +217,11 @@ def serialPortArduino(): # Searches if Arduino Uno is connecto or not
     return portVar # false or portname
 ########### Initialise the Serial port if Arduino is connected
 def comActive():
+    """
+    Is triggerd by button on GUI. Sets the baudrate enterd in the GUI
+    to the serial port where the Arduino is connected.
+    Returns: comOpen bol
+    """
     global comOpen
     portVar = serialPortArduino()
     if(portVar == False or comOpen==True):
@@ -208,7 +241,7 @@ def comActive():
             comOpen = True
         except:
             Output.insert("1.0", "Baudrate is not correct" + baudText.get() + "\n")  # puts string a beginning of text field("")
-
+    return comOpen
 
 if __name__ == '__main__':
     #------ Creat buttons of little user interface to control the plot starts etc
