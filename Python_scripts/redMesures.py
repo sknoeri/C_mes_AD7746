@@ -7,10 +7,8 @@ import matplotlib.pyplot as plt
 import tkinter as tk #tkinter for GUI
 import pandas as pd # for writing into a .xml file
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,NavigationToolbar2Tk)
-import multiprocessing
-import time
-
 import numpy as np
+
 Ts = 0.011
 widowSize = 200
 # initalize the serial port
@@ -24,7 +22,6 @@ onOffPlot = False
 comOpen = False
 Path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\C_mes_AD7746'
 
-# function that plots the Serial data from the arduino
 def plotFunc(t,data):
     """
     Args:Makes the plot of the figure defined by (t,data) on the tkinter GUI
@@ -44,8 +41,8 @@ def plotFunc(t,data):
     root.update()     # creating the Matplotlib toolbar
     return None
 
-# Fuction triggered by GUI
-def record_data(): # starts measurements when the start btton is applied
+# Fuctions triggered by GUI
+def record_data():
     """
     Reads and records the data of recived by the serial port. Is triggered by a button of the GUI
     that changes the global recordStop to True or False.
@@ -125,7 +122,6 @@ def record_data(): # starts measurements when the start btton is applied
                     root.update()
                     cnt2=0
     return recordStop, t_val, cpacity
-# Turns on/off the plot
 def OnOff_plot():
     """
     Is triggerd by button on GUI
@@ -148,7 +144,7 @@ def OnOff_plot():
         onOffPlot = False
     return onOffPlot, widowSize
 
-def save_data(): # stp button is applyed the fucktion saves data to measurment file
+def save_data():
     """
     Is triggrd by button on GUI. Saves data descibed path in code.
     Returns: None
@@ -221,13 +217,13 @@ def comActive():
     return comOpen
 
 if __name__ == '__main__':
-    #------ Creat buttons of little user interface to control the plot starts etc
+    #------ Creats the tkinter objet which allows the creation of a GUI
     root = tk.Tk()
     root.title('Real time plot')
     root.config(background= 'light blue')
     root.geometry('1000x600') #set the window size
 
-    #define fgures
+    #define fgures for on off buttons
     on = tk.PhotoImage(file=Path + "/Python_scripts/on.png")
     off = tk.PhotoImage(file=Path + "/Python_scripts/off.png")
 
@@ -270,7 +266,7 @@ if __name__ == '__main__':
     save = tk.Button(root, text= "Save", font= ('calbiri',15), command= lambda: save_data())
     save.place(x=10, y=plotLabel.winfo_y() + 50)
 
-    # tell ui the name of the saved file
+    # tell gui the name of the saved file
     root.update()
     fileName = tk.Entry(root, width=20, borderwidth=2, font=("Helvetica", 15))
     fileName.place(x=save.winfo_x() + save.winfo_width() + 20, y=save.winfo_y()+5 )
@@ -288,7 +284,7 @@ if __name__ == '__main__':
     plot1.set_xlabel('t')
     plot1.set_ylabel('data')
     plot1.grid()
-    # creating the Tkinter canvas
+    # creating the Tkinter canvas ie the blu GUI plot
     # containing the Matplotlib figure
     canvas = FigureCanvasTkAgg(fig,master=root)
     canvas.get_tk_widget().place(x=baudText.winfo_x()+baudText.winfo_width()+20 , y=startSerial.winfo_y()) # placing the canvas on the Tkinter window

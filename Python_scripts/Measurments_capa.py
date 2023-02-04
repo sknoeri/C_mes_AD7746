@@ -2,17 +2,17 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\Measurments_excel\Measures_CCS-LIMMPET\CapaDiff' #
-meas=pd.read_excel(open(path+'/CCs_2umKCl_358_174_30V3.xlsx', 'rb'))
-time = meas['t'].to_numpy()
-capa = meas['C'].to_numpy()
+path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\Measurments_excel\Measures_OilDIdroplets' #\CapaDiff
+meas=pd.read_excel(open(path+'/1mmCapa_speed.xlsx', 'rb'))
+# time = meas['t'].to_numpy()
+# capa = meas['C'].to_numpy()
 # V = meas['V'].to_numpy()
-# time = meas['time'].to_numpy()
-# capa = meas['pressure'].to_numpy()
+time = meas['time'].to_numpy()
+capa = meas['pressure'].to_numpy()
 area=np.arange(2,len(capa),1)
 ## making the plots of the measurements
 plt.figure()
-plt.plot(time[area],capa[area]-122)#,label='Capacitance signal [fF]'
+plt.plot(time[area],(capa[area]-18836))#,label='Capacitance signal [fF]'
 # plt.plot(time[area],V[area],'-o',label='Applied voltage [V]')
 plt.ylabel('C [fF]')
 plt.xlabel('t [s]')

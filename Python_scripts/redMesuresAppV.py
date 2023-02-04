@@ -1,16 +1,12 @@
-# This is a sample Python script.
 
-# Press Umschalt+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import serial.tools.list_ports # Serial library
 import matplotlib.pyplot as plt
 import tkinter as tk #tkinter for GUI
-import pandas as pd # for writing into a .xml file
+import pandas as pd
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,NavigationToolbar2Tk)
 import numpy as np
-import multiprocessing
-import time
 
+#Deafult start variables
 Ts = 0.011
 widowSize = 200
 volt = 0
@@ -24,7 +20,7 @@ volts = []
 recordStop = True
 onOffPlot = False
 comOpen = False
-Path = '/Users\penna\Desktop\simon\C_mes_AD7746-main'
+Path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\C_mes_AD7746'
 
 # function that plots the Serial data from the arduino
 def plotFunc(t,data):
@@ -60,13 +56,14 @@ def record_data(): # starts measurements when the start btton is applied
     global cpacity
     global volts
     global volt
+    global Ts
     global comOpen
     global widowSize
-    if(recordStop == True and comOpen != False):# Starts record when COM is open and recod is enabled by GUI
+    if(recordStop == True and comOpen != False):#Starts record when COM is open and recod is enabled by GUI
         recordStop = False
         plt.close()
         record.config(image=on) # shows the ON button
-        Output.insert("1.0","Start measurements \n") # puts string a beginning of text field
+        Output.insert("1.0","Start measurements \n")
         cpacity = []
         volts = []
         t_val = []
@@ -77,15 +74,16 @@ def record_data(): # starts measurements when the start btton is applied
         record.config(image=off) # shows the off button
     cnt=0
     cnt2=0
-    while True: # infinite loop that reads the serial buffer of the Arduino and starts the plot
+    while True: #infinite loop that reads the serial buffer of the Arduino and starts the plot
         cnt=cnt+1
         cnt2=cnt2+1
-        if(recordStop == True or comOpen == False): # global variable that can interupt the measuremetn
+        if(recordStop == True or comOpen == False):
+            # global variable that can interupt the measuremetn
             if comOpen == False:
-                Output.insert("1.0","No arduino Uno connected \n") # puts string a beginning of text field
+                Output.insert("1.0","No arduino Uno connected \n")
                 break
             else:
-                Output.insert("1.0","Rcording is interruped \n") # puts string a beginning of text field
+                Output.insert("1.0","Rcording is interruped \n")
                 break
         if serialInst.in_waiting: # waits until charcters recived from Arduino
             t = t + Ts
@@ -98,17 +96,19 @@ def record_data(): # starts measurements when the start btton is applied
                 Output.insert('1.0','Cant read line')
                 break
             try:
-                packet = str(bites.decode('utf')).replace('\r\n', '',1)  # decodes recived bytes and removes \n\r from the reading
+                packet = str(bites.decode('utf')).replace('\r\n', '',1)
+                # decodes recived bytes and removes \n\r from the reading
             except:
                 record.config(image=off)  # shows the ON button
                 Output.insert('1.0', 'Cant decode line')
                 break
             #########
-            float_or_not = packet.replace('.', '', 1).isdigit() # checks if number is convertible to float
+            float_or_not = packet.replace('.', '', 1).isdigit()
+            #checks if number is convertible to float
             if float_or_not == False: # if not float append 0 to data vector
                 cpacity.append(0)
                 t_val.append(t)
-                Output.insert("1.0","Reciced data: "+packet +'\n') # puts string a beginning of text field
+                Output.insert("1.0","Reciced data: "+packet +'\n')
             else: # append data vector
                 cpacity.append(float(packet))
                 t_val.append(t)
@@ -137,6 +137,20 @@ def record_data(): # starts measurements when the start btton is applied
                     cnt2=0
     return recordStop, t_val, cpacity
 # Turns on/off the plot
+def set_Ts():
+    """
+    Triggerd by the GUI. Puts the sample time configured on the Chip.
+    Returns: Ts float
+    """
+    global Ts
+    T = setTs.get()
+    try:
+       if(T.replace('.', '', 1).isdigit()==True):
+           Ts=T
+    except:
+        Ts=0.011
+    Output.insert('1.0', 'Sample time Ts set to: ' + str(Ts) + '\n')
+    return Ts
 def OnOff_plot():
     """
     Is triggerd by button on GUI
@@ -158,7 +172,7 @@ def OnOff_plot():
         plotOnOff.config(image=off) # shows the off button
         onOffPlot = False
     return onOffPlot, widowSize
-def save_data(): # stp button is applyed the fucktion saves data to measurment file
+def save_data():
     """
     Is triggrd by button on GUI. Saves data descibed path in code.
     Returns: None
@@ -172,11 +186,11 @@ def save_data(): # stp button is applyed the fucktion saves data to measurment f
         try:
             data.to_excel(Path+'/' + name +'.xlsx')
             Output.insert("1.0",
-                          "Register measurements to: \n" + Path + '/' + name + '.xlsx \n')  # puts string a beginning of text field
+                          "Register measurements to: \n" + Path + '/' + name + '.xlsx \n')
         except:
             data.to_csv(Path+'/' + name +'.csv')
             Output.insert("1.0",
-                          "Register measurements to: \n" + Path + '/' + name + '.csv \n')  # puts string a beginning of text field
+                          "Register measurements to: \n" + Path + '/' + name + '.csv \n')
     else:
         Output.insert("1.0","Emty file \n") # puts string a beginning of text field
     return None
@@ -192,6 +206,7 @@ def apply_V():
            volt=v
     except:
         volt=0
+    Output.insert('1.0', 'Applied voltage set to:'+str(volt)+'\n')
     return volt
 
 # fuction that searches if and where a Arduino is connected
@@ -206,14 +221,14 @@ def serialPortArduino(): # Searches if Arduino Uno is connecto or not
     if len(ports)==0:
         Output.insert("1.0","No port is conected \n") # puts string a beginning of text field
 
-    for onePort in ports: # loops trough all connected ports and appends them to an array
+    for onePort in ports: # loops trougth all connected ports and appends them to an array
         portName = str(onePort)
         portList.append(portName)
-        if "Arduino Uno" in portName: # checks if one of the ports is an Arduino uno
+        if "Arduino Uno" in portName: #checks if one of the ports is an Arduino uno
             portVar = portName[0:5]
-            Output.insert("1.0","Arduino Uno conneced to Port: " + portVar + '\n') # puts string a beginning of text field
+            Output.insert("1.0","Arduino Uno conneced to Port: " + portVar + '\n')
         else:
-            Output.insert("1.0","No Arduino Uno conected \n") # puts string a beginning of text field
+            Output.insert("1.0","No Arduino Uno conected \n")
     return portVar # false or portname
 ########### Initialise the Serial port if Arduino is connected
 def comActive():
@@ -240,11 +255,11 @@ def comActive():
             Output.insert("1.0", "Baudrate is set to:" + baudText.get() + "\n")
             comOpen = True
         except:
-            Output.insert("1.0", "Baudrate is not correct" + baudText.get() + "\n")  # puts string a beginning of text field("")
+            Output.insert("1.0", "Baudrate is not correct" + baudText.get() + "\n")
     return comOpen
 
 if __name__ == '__main__':
-    #------ Creat buttons of little user interface to control the plot starts etc
+    #Creat buttons of little user interface to control the plot starts etc
     root = tk.Tk()
     root.title('Real time plot')
     root.config(background= 'light blue')
@@ -258,7 +273,7 @@ if __name__ == '__main__':
     serialLabel = tk.Label(root, text="Serial On/Off", font= ('calbiri', 15))
     serialLabel.place(x = 10, y = 20)
     root.update()
-    startSerial = tk.Button(root, image=off, font= ('calbiri',12), command= lambda: comActive()) #text= "Serial On/Off",
+    startSerial = tk.Button(root, image=off, font= ('calbiri',12), command= lambda: comActive())
     startSerial.place(x= serialLabel.winfo_x()+serialLabel.winfo_width()+20, y=10)
 
     # tell GUI the baude rate
@@ -266,14 +281,25 @@ if __name__ == '__main__':
     baudLabel = tk.Label(root, text="Set Baudrate",font=("Helvetica", 15))
     baudLabel.place(x = 10, y = serialLabel.winfo_y()+50)
     root.update()
-    baudText = tk.Entry(root, width=20, borderwidth=2,font=("Helvetica", 15)) #bg="black", fg="white",
+    baudText = tk.Entry(root, width=20, borderwidth=2,font=("Helvetica", 15))
     baudText.place(x=baudLabel.winfo_x() + baudLabel.winfo_width() + 20, y=baudLabel.winfo_y())
+    root.update()
+
+    # Apply volt button data button
+    root.update()
+    setTsB = tk.Button(root, text="Ts", font=('calbiri', 15), command=lambda: set_Ts())
+    setTsB.place(x=10, y=baudText.winfo_y() + 50) # Apply volt button data button
+
+    # Used sample time
+    root.update()
+    setTs = tk.Entry(root, width=10, borderwidth=2, font=("Helvetica", 15))
+    setTs.place(x=setTsB.winfo_x() + setTsB.winfo_width() + 20, y=setTsB.winfo_y() + 5)
     root.update()
 
     # record data start button
     root.update()
     recordLabel = tk.Label(root, text="Record On/Off", font= ('calbiri', 15))
-    recordLabel.place(x = 10, y = baudLabel.winfo_y()+50)
+    recordLabel.place(x = 10, y = setTs.winfo_y()+50)
     root.update()
     record = tk.Button(root, image=off,  command= lambda: record_data())
     record.place(x= recordLabel.winfo_x()+recordLabel.winfo_width()+20, y=recordLabel.winfo_y()-8)
@@ -310,12 +336,12 @@ if __name__ == '__main__':
     appVolt.place(x=apply.winfo_x() + apply.winfo_width() + 20, y=apply.winfo_y() + 5)
     root.update()
 
-    #------ puttig the text log field ----
+    #puttig the text log field
     Output = tk.Text(root, height=20,width=35,bg="light cyan",font=("Helvetica", 15))
     Output.place(x=10, y=appVolt.winfo_y() + appVolt.winfo_height() + 10)
     root.update()
 
-    #------The figure on the user interface window------#
+    #The figure on the user interface window#
     fig = plt.figure()
     plot1 = fig.add_subplot(111)
     plot1.set_title('Serial Data')
@@ -325,7 +351,7 @@ if __name__ == '__main__':
     # creating the Tkinter canvas
     # containing the Matplotlib figure
     canvas = FigureCanvasTkAgg(fig,master=root)
-    canvas.get_tk_widget().place(x=baudText.winfo_x()+baudText.winfo_width()+50 , y=startSerial.winfo_y()) # placing the canvas on the Tkinter window
+    canvas.get_tk_widget().place(x=baudText.winfo_x()+baudText.winfo_width()+50 , y=startSerial.winfo_y())
     canvas.draw()
     toolbar = NavigationToolbar2Tk(canvas,root)
     toolbar.update()
