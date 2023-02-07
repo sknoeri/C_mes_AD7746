@@ -4,21 +4,21 @@ import matplotlib.pyplot as plt
 
 path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\Measurments_excel\Measures_CCS-LIMMPET\CapaDiff' #
 meas=pd.read_excel(open(path+'/CCsKCl_2um_358_174100V.xlsx', 'rb'))
-time = meas['t'].to_numpy()/0.011
+time = meas['t'].to_numpy()
 capa = meas['C'].to_numpy()
 V = meas['V'].to_numpy()
 # time = meas['time'].to_numpy()
 # capa = meas['pressure'].to_numpy()
 area=np.arange(2,len(capa),1)
 ## making the plots of the measurements
-# plt.figure()
-# plt.plot(time[area],capa[area]-3097-114,label='Capacitance signal [fF]')
-# plt.plot(time[area],V[area],'-o',label='Applied voltage [V]')
-# plt.ylabel('C [fF]')
-# plt.xlabel('t [s]')
-# plt.legend()
-# plt.grid()
-
+plt.figure()
+plt.plot(time[area],capa[area]-3097-114,label='Capacitance signal [fF]')
+plt.plot(time[area],V[area],'-o',label='Applied voltage [dV]')
+plt.ylabel('C [fF]')
+plt.xlabel('t [s]')
+plt.legend()
+plt.grid()
+plt.plot()
 
 zero = [69/75,19/24,88/103,139/150,17/21,83/99,122/136,11/14,24/30,40/50,148/162]
 hund = [156/172,60/74,175/190,27/33,12/12,16/16,19/20,16/18,18/21,23/27,15/18]
@@ -43,6 +43,8 @@ plt.plot([4,4],[np.std(tous)+mean[3],-np.std(tous)+mean[3]],'r--o')
 plt.plot(exmean,mean,'r-o',label='mean +- STD')
 plt.ylabel('Peak ratio')
 plt.xlabel('experiment #')
+plt.ylim(top=3)
+plt.ylim(bottom=0)
 plt.legend()
 plt.grid()
 
@@ -88,6 +90,8 @@ plt.plot([4,4],[np.std(tous)+mean[3],-np.std(tous)+mean[3]],'r--o')
 plt.plot(exmean,mean,'r-o',label='mean +- STD')
 plt.ylabel('Peak ratio')
 plt.xlabel('experiment #')
+plt.ylim(top=3.5)
+plt.ylim(bottom=0)
 plt.legend()
 plt.grid()
 
@@ -136,5 +140,7 @@ plt.plot(exmean,mean,'r-o',label='mean +- STD')
 plt.ylabel('Peak ratio')
 plt.xlabel('experiment #')
 plt.legend()
+plt.ylim(top=3)
+plt.ylim(bottom=0)
 plt.grid()
 plt.show()

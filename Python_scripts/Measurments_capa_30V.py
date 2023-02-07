@@ -3,18 +3,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\Measurments_excel\Measures_CCS-LIMMPET\CapaDiff'
-meas=pd.read_excel(open(path+'/CCs_2umKCl_358_174_30V.xlsx', 'rb'))
-time = meas['t'].to_numpy()/0.011
+meas=pd.read_excel(open(path+'/CCS_diff_2um_KClDI_Oil_3max30V2.xlsx', 'rb'))
+time = meas['t'].to_numpy()
 capa = meas['C'].to_numpy()
-V = meas['V'].to_numpy()
+# V = meas['V'].to_numpy()
 # time = meas['time'].to_numpy()
 # capa = meas['pressure'].to_numpy()
 area=np.arange(73095,73160,1)
 area=np.arange(2,len(capa),1)
 ## making the plots of the measurements
 plt.figure()
-plt.plot(time[area],capa[area]-4003,'-o',label='Capacitance signal [fF]')
-plt.plot(time[area],V[area],'-o',label='Applied voltage [V]')
+plt.plot(time[area],capa[area]-3958,label='Capacitance signal [fF]')
+# plt.plot(time[area],V[area],'-o',label='Applied voltage [V]')
 plt.ylabel('C [fF]')
 plt.xlabel('t [s]')
 plt.legend()
