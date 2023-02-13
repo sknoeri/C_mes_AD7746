@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e6d02b3-8290-4160-8d42-077a0799a631" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Measurments_capa1000V100nm_Droplet_dist.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Measurments_capa1000V100nmBG_Droplet_dist.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Measurments_capa1000V100nmbig.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Measurments_capa1000V100nm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Measurments_capa1000V100nm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Measurments_capa1000V1um.py" beforeDir="false" afterPath="$PROJECT_DIR$/Measurments_capa1000V1um.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Measurments_capa1000V100nm_Droplet_dist.py" beforeDir="false" afterPath="$PROJECT_DIR$/Measurments_capa1000V100nm_Droplet_dist.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Measurments_capa1000V2um.py" beforeDir="false" afterPath="$PROJECT_DIR$/Measurments_capa1000V2um.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Measurments_capa_30V.py" beforeDir="false" afterPath="$PROJECT_DIR$/Measurments_capa_30V.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +48,7 @@
       <recent name="C:\Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Python_scripts" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Measurments_capa1000V100nm">
+  <component name="RunManager" selected="Python.Measurments_capa1000V100nmBG_Droplet_dist">
     <configuration name="Measurments_capa1000V100nm" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Python_scripts" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -62,6 +62,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Measurments_capa1000V100nm.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Measurments_capa1000V100nmBG_Droplet_dist" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Python_scripts" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Measurments_capa1000V100nmBG_Droplet_dist.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -91,7 +112,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Measurments_capa1000V1um" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Measurments_capa1000V100nmbig" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Python_scripts" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -103,7 +124,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Measurments_capa1000V1um.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Measurments_capa1000V100nmbig.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -125,27 +146,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Measurments_capa1000V2um.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Measurments_capa_30V" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Python_scripts" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Measurments_capa_30V.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -199,19 +199,19 @@
     <list>
       <item itemvalue="Python.redMesures_ChnelAandB" />
       <item itemvalue="Python.main" />
+      <item itemvalue="Python.Measurments_capa1000V100nmBG_Droplet_dist" />
+      <item itemvalue="Python.Measurments_capa1000V100nmbig" />
       <item itemvalue="Python.Measurments_capa1000V100nm_Droplet_dist" />
-      <item itemvalue="Python.Measurments_capa_30V" />
       <item itemvalue="Python.Measurments_capa1000V100nm" />
-      <item itemvalue="Python.Measurments_capa1000V1um" />
       <item itemvalue="Python.Measurments_capa1000V2um" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Measurments_capa1000V100nm" />
+        <item itemvalue="Python.Measurments_capa1000V100nmBG_Droplet_dist" />
+        <item itemvalue="Python.Measurments_capa1000V100nmbig" />
         <item itemvalue="Python.Measurments_capa1000V100nm_Droplet_dist" />
         <item itemvalue="Python.Measurments_capa1000V2um" />
-        <item itemvalue="Python.Measurments_capa1000V1um" />
-        <item itemvalue="Python.Measurments_capa_30V" />
+        <item itemvalue="Python.Measurments_capa1000V100nm" />
       </list>
     </recent_temporary>
   </component>

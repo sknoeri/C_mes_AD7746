@@ -118,21 +118,21 @@ plt.grid()
 
 path = '/Users\simon\Documents\Simels_daten\Epfl\sem_13_2022_Master_theis_USA\Master_thesis\Capacitance_measuring\Measurments_excel\Measures_CCS-LIMMPET\CapaDiff' #
 meas=pd.read_excel(open(path+'/CSS_340_174_100nm1000V3.xlsx', 'rb'))
-time = meas['t'].to_numpy()/0.011
+time = meas['t'].to_numpy()
 capa = meas['C'].to_numpy()
-V = meas['V'].to_numpy()/10
+V = meas['V'].to_numpy()
 # time = meas['time'].to_numpy()
 # capa = meas['pressure'].to_numpy()
 area=np.arange(30,len(capa),1)
 ## making the plots of the measurements
-# plt.figure()
-# plt.plot(time[area],capa[area]-3537,label='Capacitance signal [fF]')
-# plt.plot(time[area],V[area],'-o',label='Applied voltage [V]')
-# plt.ylabel('C [fF]')
-# plt.xlabel('t [s]')
-# plt.legend()
-# plt.grid()
-# plt.show()
+plt.figure()
+plt.plot(time[area],capa[area]-3537,label='Capacitance signal [fF]')
+plt.plot(time[area],V[area],'-o',label='Applied voltage [V]')
+plt.ylabel('C [fF]/[V]')
+plt.xlabel('t [s]')
+plt.legend()
+plt.grid()
+plt.show()
 
 zero = [91/84,60/51,129/121,41/34,42/36,20/17,23/17,54/46,17/14,57/49,17/14,10/9,31/25,21/16,76/71,51/43,27/21,
         76/71,51/43,27/21,166/163,65/58,35/28,25/19,80/72]
